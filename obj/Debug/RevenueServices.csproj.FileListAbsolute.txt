@@ -1,0 +1,6 @@
+C:\Users\qurda\source\repos\RsDllTestProject\RevenueServices\bin\Debug\RevenueServices.dll
+C:\Users\qurda\source\repos\RsDllTestProject\RevenueServices\bin\Debug\RevenueServices.pdb
+C:\Users\qurda\source\repos\RsDllTestProject\RevenueServices\obj\Debug\RevenueServices.csproj.CoreCompileInputs.cache
+C:\Users\qurda\source\repos\RsDllTestProject\RevenueServices\obj\Debug\RevenueServices.dll
+C:\Users\qurda\source\repos\RsDllTestProject\RevenueServices\obj\Debug\RevenueServices.pdb
+C:\Users\qurda\source\repos\RsDllTestProject\RevenueServices\obj\Debug\RevenueServices.csprojAssemblyReference.cache
