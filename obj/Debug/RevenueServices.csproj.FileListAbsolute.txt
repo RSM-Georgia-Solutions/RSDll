@@ -4,3 +4,17 @@ C:\Users\qurda\source\repos\RsDllTestProject\RevenueServices\obj\Debug\RevenueSe
 C:\Users\qurda\source\repos\RsDllTestProject\RevenueServices\obj\Debug\RevenueServices.dll
 C:\Users\qurda\source\repos\RsDllTestProject\RevenueServices\obj\Debug\RevenueServices.pdb
 C:\Users\qurda\source\repos\RsDllTestProject\RevenueServices\obj\Debug\RevenueServices.csprojAssemblyReference.cache
+C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\RevenueServices.dll
+C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\RevenueServices.pdb
+C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\Autofac.dll
+C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\Autofac.pdb
+C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\Autofac.xml
+C:\Users\nkurdadze\Source\Repos\RSDll\obj\Debug\RevenueServices.csproj.CoreCompileInputs.cache
+C:\Users\nkurdadze\Source\Repos\RSDll\obj\Debug\RevenueServices.csproj.CopyComplete
+C:\Users\nkurdadze\Source\Repos\RSDll\obj\Debug\RevenueServices.dll
+C:\Users\nkurdadze\Source\Repos\RSDll\obj\Debug\RevenueServices.pdb
+C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\Newtonsoft.Json.dll
+C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\Newtonsoft.Json.xml
+C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\nkurdadze\Source\Repos\RSDll\obj\Debug\RevenueServices.csprojAssemblyReference.cache
