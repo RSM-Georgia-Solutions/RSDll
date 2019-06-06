@@ -53,12 +53,15 @@
   <ItemGroup>
     <Compile Include="ContainerConfig.cs" />
     <Compile Include="Inrerfaces\IRsClient.cs" />
-    <Compile Include="Models\TokenModelOneStep.cs" />
+    <Compile Include="Models\RequestModels\VatPayerModel.cs" />
+    <Compile Include="Models\ResponseModels\TokenOneStep.cs" />
+    <Compile Include="Models\ResponseModels\UnitOfMeasures.cs" />
+    <Compile Include="Models\ResponseModels\VatPayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RsClient.cs" />
-    <Compile Include="Models\RsResponse.cs" />
-    <Compile Include="Models\RsStatus.cs" />
-    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\ResponseModels\RsResponse.cs" />
+    <Compile Include="Models\ResponseModels\RsStatus.cs" />
+    <Compile Include="Models\RequestModels\UserModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -9,7 +9,7 @@ namespace RevenueServices.Inrerfaces
 {
     public interface IRsClient
     {
-         Task<RsResponse<TokenModelOneStep>> Authenticate(UserModel userModel);
+         //Task<RsResponse<TokenOneStep>> Authenticate(UserModel userModel);
          //Task<RsResponse<bool>> LogOut();
     }
 }
