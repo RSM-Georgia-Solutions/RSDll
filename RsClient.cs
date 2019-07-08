@@ -25,7 +25,8 @@ namespace RevenueServices
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.BaseAddress = new Uri("https://eapi.rs.ge");
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _token = new TokenOneStep();
+            _token = new TokenOneStep();            
+            //DD-MM-YYYY 24HH:MI:SS”.
         }
 
         /// <summary>
@@ -141,7 +142,18 @@ namespace RevenueServices
             }
         }
 
-        
+        public static async Task<RsResponse<InvoiceResponse>> GetInvoice(InvoiceModelGet invoiceModelGet)
+        {
+            string url = "/Invoice/GetInvoice";
+            await ValidateToken();
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoiceModelGet))
+            {
+                RsResponse<InvoiceResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceResponse>> ();
+                return result;
+            }
+        }
+
+
 
     }
 }
