@@ -61,6 +61,7 @@
     <Compile Include="Models\InvoiceReturn.cs" />
     <Compile Include="Models\RequestModels\InvoiceModelGet.cs" />
     <Compile Include="Models\RequestModels\VatPayerModel.cs" />
+    <Compile Include="Models\ResponseModels\InvoiceSendResponse.cs" />
     <Compile Include="Models\ResponseModels\TokenOneStep.cs" />
     <Compile Include="Models\ResponseModels\UnitOfMeasures.cs" />
     <Compile Include="Models\ResponseModels\VatPayer.cs" />

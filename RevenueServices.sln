@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevenueServices", "RevenueServices.csproj", "{EFDF1BFF-74BC-47E5-A189-263E447A80C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RsDllTest", "D:\Users\nkurdadze\Documents\Visual Studio 2015\Projects\RsDllTest\RsDllTest\RsDllTest.csproj", "{8275491D-9607-4AD8-AB5D-278F39FB405F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{EFDF1BFF-74BC-47E5-A189-263E447A80C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFDF1BFF-74BC-47E5-A189-263E447A80C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFDF1BFF-74BC-47E5-A189-263E447A80C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8275491D-9607-4AD8-AB5D-278F39FB405F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8275491D-9607-4AD8-AB5D-278F39FB405F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8275491D-9607-4AD8-AB5D-278F39FB405F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8275491D-9607-4AD8-AB5D-278F39FB405F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

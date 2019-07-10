@@ -17,3 +17,4 @@ C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\Newtonsoft.Json.dll
 C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\System.Net.Http.Formatting.dll
 C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\Newtonsoft.Json.xml
 C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\nkurdadze\Source\Repos\RSDll\obj\Debug\RevenueServices.csprojAssemblyReference.cache

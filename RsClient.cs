@@ -142,13 +142,115 @@ namespace RevenueServices
             }
         }
 
-        public static async Task<RsResponse<InvoiceResponse>> GetInvoice(InvoiceModelGet invoiceModelGet)
+        public static async Task<RsResponse<InvoiceGetResponse>> GetInvoice(InvoiceModelGet invoiceModelGet)
         {
             string url = "/Invoice/GetInvoice";
             await ValidateToken();
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoiceModelGet))
             {
-                RsResponse<InvoiceResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceResponse>> ();
+                RsResponse<InvoiceGetResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceGetResponse>> ();
+                return result;
+            }
+        }
+
+        public static async Task<RsResponse<InvoiceSendResponse>> SaveInvoice(Invoice invoice)
+        {
+            string url = "/Invoice/SaveInvoice";
+            await ValidateToken();
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoice))
+            {
+                RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
+                return result;
+            }
+        }
+
+
+        public static async Task<RsResponse<InvoiceSendResponse>> ActivateInvoice(Invoice invoice)
+        {
+            string url = "/Invoice/ActivateInvoice";
+            await ValidateToken();
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoice))
+            {
+                RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
+                return result;
+            }
+        }
+
+        public static async Task<RsResponse<InvoiceSendResponse>> ActivateInvoices(List<Invoice> invoices)
+        {
+            string url = "/Invoice/ActivateInvoices";
+            await ValidateToken();
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoices))
+            {
+                RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
+                return result;
+            }
+        }
+
+        public static async Task<RsResponse<InvoiceSendResponse>> DeleteInvoice(Invoice invoice)
+        {
+            string url = "/Invoice/DeleteInvoice";
+            await ValidateToken();
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoice))
+            {
+                RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
+                return result;
+            }
+        }
+
+
+        public static async Task<RsResponse<InvoiceSendResponse>> CancelInvoice(Invoice invoice)
+        {
+            string url = "/Invoice/CancelInvoice";
+            await ValidateToken();
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoice))
+            {
+                RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
+                return result;
+            }
+        }
+
+        public static async Task<RsResponse<InvoiceSendResponse>> RefuseInvoice(Invoice invoice)
+        {
+            string url = "/Invoice/RefuseInvoice";
+            await ValidateToken();
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoice))
+            {
+                RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
+                return result;
+            }
+        }
+
+        public static async Task<RsResponse<InvoiceSendResponse>> RefuseInvoices(List<Invoice> invoices)
+        {
+            string url = "/Invoice/RefuseInvoices";
+            await ValidateToken();
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoices))
+            {
+                RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
+                return result;
+            }
+        }
+
+
+        public static async Task<RsResponse<InvoiceSendResponse>> ConfirmInvoice(Invoice invoice)
+        {
+            string url = "/Invoice/ConfirmInvoice";
+            await ValidateToken();
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoice))
+            {
+                RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
+                return result;
+            }
+        }
+
+        public static async Task<RsResponse<InvoiceSendResponse>> ConfirmInvoices(List<Invoice> invoices)
+        {
+            string url = "/Invoice/ConfirmInvoice";
+            await ValidateToken();
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoices))
+            {
+                RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
                 return result;
             }
         }

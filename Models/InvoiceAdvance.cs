@@ -12,7 +12,7 @@ namespace RevenueServices.Models
         [JsonProperty("ID")]
         public int? Id { get; set; }
         [JsonProperty("OPERATION_DATE")]
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        //[JsonConverter(typeof(CustomDateTimeConverter))]
         public DateTime? OperationDate { get; set; }
         [JsonProperty("AMOUNT")]
         public double? Amount { get; set; }
@@ -36,7 +36,7 @@ namespace RevenueServices.Models
         [JsonProperty("AMOUNT_MAX")]
         public double? MaxAmount { get; set; }
         [JsonProperty("ACTIVATE_DATE")]
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        //[JsonConverter(typeof(CustomDateTimeConverter))]
         public DateTime? ActivationDate { get; set; }
     }
 }
