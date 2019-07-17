@@ -55,16 +55,22 @@
     <Compile Include="CustomDateTimeConverter.cs" />
     <Compile Include="Inrerfaces\IRsClient.cs" />
     <Compile Include="Models\Good.cs" />
+    <Compile Include="Models\IFilter.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\InvoiceAdvance.cs" />
     <Compile Include="Models\InvoiceResponse.cs" />
     <Compile Include="Models\InvoiceReturn.cs" />
+    <Compile Include="Models\RequestFileters\BarCodesFilter.cs" />
     <Compile Include="Models\RequestModels\InvoiceModelGet.cs" />
+    <Compile Include="Models\RequestModels\InvoiceModelPost.cs" />
     <Compile Include="Models\RequestModels\VatPayerModel.cs" />
+    <Compile Include="Models\RequestFileters\ExciseFileter.cs" />
+    <Compile Include="Models\ResponseModels\BarCodesResponse.cs" />
+    <Compile Include="Models\ResponseModels\ExciseResponse.cs" />
     <Compile Include="Models\ResponseModels\InvoiceSendResponse.cs" />
-    <Compile Include="Models\ResponseModels\TokenOneStep.cs" />
-    <Compile Include="Models\ResponseModels\UnitOfMeasures.cs" />
-    <Compile Include="Models\ResponseModels\VatPayer.cs" />
+    <Compile Include="Models\ResponseModels\TokenOneStepResponse.cs" />
+    <Compile Include="Models\ResponseModels\UnitOfMeasuresResponse.cs" />
+    <Compile Include="Models\ResponseModels\VatPayerResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RsClient.cs" />
     <Compile Include="Models\ResponseModels\RsResponse.cs" />
@@ -74,5 +80,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RevenueServices.Models.ResponseModels
 {
-    public class UnitOfMeasures
+    public class UnitOfMeasuresResponse
     {
         public string value { get; set; }
         public string label { get; set; }

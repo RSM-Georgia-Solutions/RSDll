@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace RevenueServices.Models
 {
+
     public class Invoice
     {
         [JsonProperty("ID")]

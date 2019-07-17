@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RevenueServices.Models
 {
-    public class TokenOneStep
+    public class TokenOneStepResponse
     {
         [JsonProperty("ACCESS_TOKEN")]
         public string AccessToken { get; set; }
@@ -17,7 +17,7 @@ namespace RevenueServices.Models
         public string MaskedMobile { get; set; }
         public DateTime ExpireDate { get; set; }
 
-        public TokenOneStep()
+        public TokenOneStepResponse()
         {
             ExpireDate = DateTime.MinValue;
         }

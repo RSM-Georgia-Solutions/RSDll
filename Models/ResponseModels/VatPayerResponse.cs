@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RevenueServices.Models
 {
-    public class VatPayer
+    public class VatPayerResponse
     {
         public bool IsVatPayer { get; set; }
     }
