@@ -132,13 +132,15 @@ namespace RevenueServices
         /// პასუხი ტრანზაქციის ნომრის მიხედვით
         /// </summary>
         /// <returns></returns>
-        public static async Task<RsResponse<bool>> GetTransactionResult() //TODO
+        public static async Task<RsResponse<string>> GetTransactionResult(string TransactionId) //TODO
         {
             string url = "/Common/GetTransactionResult";
             await ValidateToken();
-            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, string.Empty))
+            var barCodeJson = new { TransactionId };
+
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, barCodeJson))
             {
-                RsResponse<bool> result = await response.Content.ReadAsAsync<RsResponse<bool>>();
+                RsResponse<string> result = await response.Content.ReadAsAsync<RsResponse<string>>();
                 return result;
             }
         }
@@ -181,7 +183,11 @@ namespace RevenueServices
         {
             string url = "/Invoice/ActivateInvoices";
             await ValidateToken();
-            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoices))
+            InvoicesModelPost invoiceList = new InvoicesModelPost
+            {
+                Invoices = invoices
+            };
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoiceList))
             {
                 RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
                 return result;
@@ -200,11 +206,15 @@ namespace RevenueServices
         }
 
 
-        public static async Task<RsResponse<InvoiceSendResponse>> CancelInvoice(InvoiceModelPost invoice)
+        public static async Task<RsResponse<InvoiceSendResponse>> CancelInvoice(Invoice invoice)
         {
             string url = "/Invoice/CancelInvoice";
             await ValidateToken();
-            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoice))
+            InvoiceModelPost invoiceModelPost = new InvoiceModelPost
+            {
+                Invoice = invoice
+            };
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoiceModelPost))
             {
                 RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
                 return result;
@@ -226,7 +236,11 @@ namespace RevenueServices
         {
             string url = "/Invoice/RefuseInvoices";
             await ValidateToken();
-            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoices))
+            InvoicesModelPost invoiceList = new InvoicesModelPost
+            {
+                Invoices = invoices
+            };
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoiceList))
             {
                 RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
                 return result;
@@ -250,9 +264,14 @@ namespace RevenueServices
 
         public static async Task<RsResponse<InvoiceSendResponse>> ConfirmInvoices(List<Invoice> invoices)
         {
+            InvoicesModelPost invoiceList = new InvoicesModelPost
+            {
+                Invoices = invoices
+            };
             string url = "/Invoice/ConfirmInvoices";
             await ValidateToken();
-            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoices))
+            var x = JsonConvert.SerializeObject(invoiceList);
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoiceList))
             {
                 RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
                 return result;

@@ -55,7 +55,7 @@
     <Compile Include="CustomDateTimeConverter.cs" />
     <Compile Include="Inrerfaces\IRsClient.cs" />
     <Compile Include="Models\Good.cs" />
-    <Compile Include="Models\IFilter.cs" />
+    <Compile Include="Inrerfaces\IFilter.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\InvoiceAdvance.cs" />
     <Compile Include="Models\InvoiceResponse.cs" />
@@ -63,11 +63,13 @@
     <Compile Include="Models\RequestFileters\BarCodesFilter.cs" />
     <Compile Include="Models\RequestModels\InvoiceModelGet.cs" />
     <Compile Include="Models\RequestModels\InvoiceModelPost.cs" />
+    <Compile Include="Models\RequestModels\InvoicesModelPost.cs" />
     <Compile Include="Models\RequestModels\VatPayerModel.cs" />
     <Compile Include="Models\RequestFileters\ExciseFileter.cs" />
     <Compile Include="Models\ResponseModels\BarCodesResponse.cs" />
     <Compile Include="Models\ResponseModels\ExciseResponse.cs" />
     <Compile Include="Models\ResponseModels\InvoiceSendResponse.cs" />
+    <Compile Include="Inrerfaces\IRsResponse.cs" />
     <Compile Include="Models\ResponseModels\TokenOneStepResponse.cs" />
     <Compile Include="Models\ResponseModels\UnitOfMeasuresResponse.cs" />
     <Compile Include="Models\ResponseModels\VatPayerResponse.cs" />
