@@ -70,6 +70,7 @@
     <Compile Include="Models\ResponseModels\ExciseResponse.cs" />
     <Compile Include="Models\ResponseModels\InvoiceSendResponse.cs" />
     <Compile Include="Inrerfaces\IRsResponse.cs" />
+    <Compile Include="Models\ResponseModels\OrgInfoResponse.cs" />
     <Compile Include="Models\ResponseModels\TokenOneStepResponse.cs" />
     <Compile Include="Models\ResponseModels\UnitOfMeasuresResponse.cs" />
     <Compile Include="Models\ResponseModels\VatPayerResponse.cs" />

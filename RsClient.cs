@@ -26,7 +26,7 @@ namespace RevenueServices
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.BaseAddress = new Uri("https://eapi.rs.ge");
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _token = new TokenOneStepResponse();            
+            _token = new TokenOneStepResponse();
             //DD-MM-YYYY 24HH:MI:SS”.
         }
 
@@ -145,21 +145,24 @@ namespace RevenueServices
             }
         }
 
-        public static async Task<RsResponse<InvoiceGetResponse>> GetInvoice(InvoiceModelGet invoiceModelGet)
+        public static async Task<RsResponse<InvoiceGetResponse>> GetInvoice(InvoiceModelGet invoiceModelGet)//TODO
         {
             string url = "/Invoice/GetInvoice";
             await ValidateToken();
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoiceModelGet))
             {
-                RsResponse<InvoiceGetResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceGetResponse>> ();
+                RsResponse<InvoiceGetResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceGetResponse>>();
                 return result;
             }
         }
 
-        public static async Task<RsResponse<InvoiceSendResponse>> SaveInvoice(Invoice invoice)
+        public static async Task<RsResponse<InvoiceSendResponse>> SaveInvoice(InvoiceModelPost invoice)
         {
             string url = "/Invoice/SaveInvoice";
             await ValidateToken();
+
+            var x = JsonConvert.SerializeObject(invoice);
+
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoice))
             {
                 RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
@@ -252,7 +255,7 @@ namespace RevenueServices
         {
             string url = "/Invoice/ConfirmInvoice";
             await ValidateToken();
- 
+
             var myContent = JsonConvert.SerializeObject(invoice);
 
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoice))
@@ -320,10 +323,22 @@ namespace RevenueServices
         {
             string url = "/Invoice/ClearBarCodes";
             await ValidateToken();
-           
+
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, string.Empty))
             {
                 RsResponse<BarCodesResponse> result = await response.Content.ReadAsAsync<RsResponse<BarCodesResponse>>();
+                return result;
+            }
+        }
+
+        public static async Task<RsResponse<OrgInfoResponse>> GetOrgInfoByTin(string tin)
+        {
+            string url = "/Org/GetOrgInfoByTin";
+            await ValidateToken();
+            var x = JsonConvert.SerializeObject(tin);
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, tin))
+            {
+                RsResponse<OrgInfoResponse> result = await response.Content.ReadAsAsync<RsResponse<OrgInfoResponse>>();
                 return result;
             }
         }

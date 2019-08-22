@@ -10,6 +10,40 @@ namespace RevenueServices.Models
 
     public class Invoice
     {
+
+        public Invoice()
+        {
+            InvSerie = string.Empty;
+            Number = null;
+            InvCategory = 1;
+            InvType = 2;
+            SellerAction = 0;
+            BuyerAction = 0;
+            SellerAction = 0;
+            OperationDate = DateTime.Now;
+            TransactionStartDate = DateTime.Now;
+            CorrectionReasonId = null;
+            ForeignBuyer = false;
+            StartAdressTransNo = string.Empty;
+            EndAdressTransNo = string.Empty;
+            TransType = 1;
+            TransTypeTxt = string.Empty;
+            TransCompanyTin = string.Empty;
+            ForeignDriverTrans = false;
+            DriverCountryTrans = null;
+            TrailerNoTrans = string.Empty;
+            PrevCorrectionId = 0;
+            TempalteName = string.Empty;
+            InvoiceGoods = new List<Good>();
+            invoiceAdvances = new List<InvoiceAdvance>();
+            InvoiceReturns = new List<InvoiceReturn>();
+            InvoiceOilDocs = new List<object>();
+            InvoiceParentGoods = new List<Good>();
+            invoiceSubDistributions = new List<InvoiceAdvance>();
+
+            
+        }
+
         [JsonProperty("ID")]
         public int? Id { get; set; }
         [JsonProperty("INV_SERIE")]
@@ -25,11 +59,11 @@ namespace RevenueServices.Models
         public int? SellerAction { get; set; }
         //ქმედება გამყიდველის მხრიდან: -2 -შაბლონი, -1 - წაშლილი, 0 - შენახული, 1 - გადაგზავნილი, 2 - გაუქმებული, 3 - კორექტირებული
         [JsonProperty("BUYER_ACTION")]
-        public int? ByerAction { get; set; }//ქმედება მყიდველის მხრიდან: 0 - დასადასტურებელი, 1 -დადასტურებული, 2 - უარყოფილი
+        public int? BuyerAction { get; set; }//ქმედება მყიდველის მხრიდან: 0 - დასადასტურებელი, 1 -დადასტურებული, 2 - უარყოფილი
         [JsonProperty("OPERATION_DATE")]       
         public DateTime? OperationDate { get; set; }
-        [JsonProperty("ACTIVATE_DATE")]      
-        public DateTime? ActivationDate { get; set; }
+        //[JsonProperty("ACTIVATE_DATE")]      
+        //public DateTime? ActivationDate { get; set; }
         [JsonProperty("CREATE_DATE")]       
         public DateTime? CreateDate { get; set; }
         [JsonProperty("CONFIRM_DATE")]        
@@ -95,9 +129,9 @@ namespace RevenueServices.Models
         [JsonProperty("TRANS_COMPANY_NAME")]
         public string TransCompanyName { get; set; }
         [JsonProperty("TRANS_DRIVER_TIN")]
-        public string DriverNameTrans { get; set; }
+        public string DriverTin { get; set; }
         [JsonProperty("TRANS_DRIVER_FOREIGN")]
-        public bool ForeignBuyerTrans { get; set; }
+        public bool ForeignDriverTrans { get; set; }
         [JsonProperty("TRANS_DRIVER_NAME")]
         public string ForeignBuyerNameTrans { get; set; }
         [JsonProperty("TRANS_DRIVER_COUNTRY")]
@@ -144,6 +178,8 @@ namespace RevenueServices.Models
         public List<InvoiceAdvance> invoiceSubDistributions { get; set; }
         [JsonProperty("INVOICE_OIL_DOCS")]
         public List<object> InvoiceOilDocs { get; set; }
+
+
 
     }
 }
