@@ -9,6 +9,6 @@ namespace RevenueServices
     public class RsResponse<TData> : IRsResponse
     {
         public TData Data { get; set; }
-        public RsStatus Status { get; set; }        
+        public RsStatus Status { get; set; }
     }
 }

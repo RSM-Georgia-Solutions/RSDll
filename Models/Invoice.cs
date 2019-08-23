@@ -60,25 +60,35 @@ namespace RevenueServices.Models
         //ქმედება გამყიდველის მხრიდან: -2 -შაბლონი, -1 - წაშლილი, 0 - შენახული, 1 - გადაგზავნილი, 2 - გაუქმებული, 3 - კორექტირებული
         [JsonProperty("BUYER_ACTION")]
         public int? BuyerAction { get; set; }//ქმედება მყიდველის მხრიდან: 0 - დასადასტურებელი, 1 -დადასტურებული, 2 - უარყოფილი
-        [JsonProperty("OPERATION_DATE")]       
+        [JsonProperty("OPERATION_DATE")]
+        [JsonConverter(typeof(DateFormatConverter))]
         public DateTime? OperationDate { get; set; }
-        //[JsonProperty("ACTIVATE_DATE")]      
-        //public DateTime? ActivationDate { get; set; }
-        [JsonProperty("CREATE_DATE")]       
+        [JsonProperty("ACTIVATE_DATE")]
+        [JsonConverter(typeof(DateFormatConverter))]
+        public DateTime? ActivationDate { get; set; }
+        [JsonProperty("CREATE_DATE")]
+        [JsonConverter(typeof(DateFormatConverter))]
         public DateTime? CreateDate { get; set; }
-        [JsonProperty("CONFIRM_DATE")]        
+        [JsonProperty("CONFIRM_DATE")]
+        [JsonConverter(typeof(DateFormatConverter))]
         public DateTime? ConfirmDate { get; set; }
-        [JsonProperty("REFUSE_DATE")]  
+        [JsonProperty("REFUSE_DATE")]
+        [JsonConverter(typeof(DateFormatConverter))]
         public DateTime? RefuseDate { get; set; }
-        [JsonProperty("REQUEST_CANCEL_DATE")]      
+        [JsonProperty("REQUEST_CANCEL_DATE")]
+        [JsonConverter(typeof(DateFormatConverter))]
         public DateTime? RequestCanelDate { get; set; }
         [JsonProperty("DELIVERY_DATE")]
+        [JsonConverter(typeof(DateFormatConverter))]
         public DateTime? DeliveryDate { get; set; }
         [JsonProperty("AGREE_CANCEL_DATE")]
+        [JsonConverter(typeof(DateFormatConverter))]
         public DateTime? AgreeCancelDate { get; set; }
         [JsonProperty("CORRECT_DATE")]
+        [JsonConverter(typeof(DateFormatConverter))]
         public DateTime? CorrectionDate { get; set; }
         [JsonProperty("TRANS_START_DATE")]
+        [JsonConverter(typeof(DateFormatConverter))]
         public DateTime? TransactionStartDate { get; set; }
         [JsonProperty("CORRECT_REASON_ID")]
         public int? CorrectionReasonId { get; set; }
@@ -147,7 +157,7 @@ namespace RevenueServices.Models
         [JsonProperty("TRANS_COST_PAYER")]
         public int? TransCostPayer { get; set; }
         [JsonProperty("INV_COMMENT")]
-        public int? Comment { get; set; }
+        public string Comment { get; set; }
         [JsonProperty("PARENT_ID")]
         public int? ParentId { get; set; }//მშობელი საგადასახადო დოკუმენტის ნომერი (დისტრიბუცია)
 
