@@ -115,7 +115,7 @@ namespace RevenueServices
             }
         }
         /// <summary>
-        /// რაღაცა
+        /// მეთოდი აბრუნებს დეკლარაციის ნომერს, გადაეცემა თარიღი
         /// </summary>
         /// <param name="invoice"></param>
         /// <returns></returns>
