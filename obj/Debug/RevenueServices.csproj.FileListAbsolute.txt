@@ -18,3 +18,14 @@ C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\System.Net.Http.Formatting.dll
 C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\Newtonsoft.Json.xml
 C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\System.Net.Http.Formatting.xml
 C:\Users\nkurdadze\Source\Repos\RSDll\obj\Debug\RevenueServices.csprojAssemblyReference.cache
+D:\SAP Addons\RS.ge\RSDll\bin\Debug\RevenueServices.dll
+D:\SAP Addons\RS.ge\RSDll\bin\Debug\RevenueServices.pdb
+D:\SAP Addons\RS.ge\RSDll\bin\Debug\Autofac.dll
+D:\SAP Addons\RS.ge\RSDll\bin\Debug\Newtonsoft.Json.dll
+D:\SAP Addons\RS.ge\RSDll\bin\Debug\System.Net.Http.Formatting.dll
+D:\SAP Addons\RS.ge\RSDll\bin\Debug\Autofac.pdb
+D:\SAP Addons\RS.ge\RSDll\bin\Debug\Autofac.xml
+D:\SAP Addons\RS.ge\RSDll\bin\Debug\Newtonsoft.Json.xml
+D:\SAP Addons\RS.ge\RSDll\bin\Debug\System.Net.Http.Formatting.xml
+D:\SAP Addons\RS.ge\RSDll\obj\Debug\RevenueServices.dll
+D:\SAP Addons\RS.ge\RSDll\obj\Debug\RevenueServices.pdb

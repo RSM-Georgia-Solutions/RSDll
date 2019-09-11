@@ -14,4 +14,11 @@ namespace RevenueServices
             base.DateTimeFormat = System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat.FullDateTimePattern;
         }
     }
+    public class DateFormatConverter : IsoDateTimeConverter
+    {
+        public DateFormatConverter()
+        {
+            base.DateTimeFormat = "dd-MM-yyyy HH:mm:ss";
+        }
+    }
 }

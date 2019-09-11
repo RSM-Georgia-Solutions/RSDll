@@ -115,6 +115,23 @@ namespace RevenueServices
             }
         }
         /// <summary>
+        /// მეთოდი აბრუნებს დეკლარაციის ნომერს, გადაეცემა თარიღი
+        /// </summary>
+        /// <param name="invoice"></param>
+        /// <returns></returns>
+        public static async Task<RsResponse<SeqNumResponse>> GetSeqNum(DateTime OperationPeriod)
+        {
+            string url = "/Invoice/GetSeqNum";
+            await ValidateToken();
+            string date = OperationPeriod.ToString("yyyyMM");
+            var operationPeriodJson = new { date };
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, date))
+            {
+                RsResponse<SeqNumResponse> result = await response.Content.ReadAsAsync<RsResponse<SeqNumResponse>>();
+                return result;
+            }
+        }
+        /// <summary>
         /// საზომი ერთეულების სიის წამოღება
         /// </summary>
         /// <returns></returns>
