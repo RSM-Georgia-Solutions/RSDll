@@ -207,6 +207,9 @@ namespace RevenueServices
             {
                 Invoices = invoices
             };
+
+            var x = JsonConvert.SerializeObject(invoiceList);
+
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoiceList))
             {
                 RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
