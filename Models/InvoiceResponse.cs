@@ -10,7 +10,7 @@ namespace RevenueServices.Models
     public class InvoiceGetResponse
     {
         [JsonProperty("INVOICE")]
-        public Invoice Invoice { get; set; }   
+        public Invoice Invoice { get; set; }
 
     }
 }

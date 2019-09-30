@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace RevenueServices
 {
-    class CustomDateTimeConverter : IsoDateTimeConverter
-    {
-        public CustomDateTimeConverter()
-        {
-            base.DateTimeFormat = System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat.FullDateTimePattern;
-        }
-    }
+    //class CustomDateTimeConverter : IsoDateTimeConverter
+    //{
+    //    public CustomDateTimeConverter()
+    //    {
+    //        base.DateTimeFormat = System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat.FullDateTimePattern;
+    //    }
+    //}
     public class DateFormatConverter : IsoDateTimeConverter
     {
         public DateFormatConverter()
         {
-            base.DateTimeFormat = "dd-MM-yyyy HH:mm:ss";
+            base.DateTimeFormat = "dd-MM-yyyy";
         }
     }
 }

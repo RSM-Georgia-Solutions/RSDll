@@ -22,7 +22,7 @@ namespace RevenueServices.Models
         [JsonProperty("BUYER")]
         public string Buyer { get; set; }
         [JsonProperty("OPERATION_DATE")]
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        [JsonConverter(typeof(DateFormatConverter))]
         public DateTime? OperationDate { get; set; }
 
     }

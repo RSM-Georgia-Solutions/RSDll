@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RevenueServices;
 using SAPbouiCOM.Framework;
 
 namespace RsDllTest
@@ -15,14 +16,7 @@ namespace RsDllTest
             try
             {
                 Application oApp = null;
-                if (args.Length < 1)
-                {
-                    oApp = new Application();
-                }
-                else
-                {
-                    oApp = new Application(args[0]);
-                }
+                oApp = args.Length < 1 ? new Application() : new Application(args[0]);
                 Menu MyMenu = new Menu();
                 MyMenu.AddMenuItems();
                 oApp.RegisterMenuEventHandler(MyMenu.SBO_Application_MenuEvent);

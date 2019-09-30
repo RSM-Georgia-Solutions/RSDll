@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace RevenueServices
 {
     public class UserModel
-    {        
+    {
         [JsonProperty("USERNAME")]
         public string UserName { get; set; }
         [JsonProperty("PASSWORD")]

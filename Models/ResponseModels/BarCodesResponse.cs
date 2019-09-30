@@ -26,8 +26,8 @@ namespace RevenueServices.Models.ResponseModels
     }
 
     public class BarCodesResponse
-    {        
+    {
         [JsonProperty("RESULT")]
-        BarCodeModel BarCodeModel;
+        public BarCodeModel BarCodeModel;
     }
 }

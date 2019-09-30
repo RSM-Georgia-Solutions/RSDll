@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevenueServices", "RevenueServices.csproj", "{EFDF1BFF-74BC-47E5-A189-263E447A80C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RsDllTest", "RsDllTest\RsDllTest.csproj", "{AC6511A0-7EED-4200-83EF-5555EF892EE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevServices", "..\RevServices\RevServices.csproj", "{4AAD6A4A-46CE-4379-819F-D96660F2E585}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{AC6511A0-7EED-4200-83EF-5555EF892EE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC6511A0-7EED-4200-83EF-5555EF892EE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC6511A0-7EED-4200-83EF-5555EF892EE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AAD6A4A-46CE-4379-819F-D96660F2E585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AAD6A4A-46CE-4379-819F-D96660F2E585}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AAD6A4A-46CE-4379-819F-D96660F2E585}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AAD6A4A-46CE-4379-819F-D96660F2E585}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -26,3 +26,4 @@ D:\SAP Addons\RS.ge\RSDll\bin\Debug\Newtonsoft.Json.xml
 D:\SAP Addons\RS.ge\RSDll\bin\Debug\System.Net.Http.Formatting.xml
 D:\SAP Addons\RS.ge\RSDll\obj\Debug\RevenueServices.dll
 D:\SAP Addons\RS.ge\RSDll\obj\Debug\RevenueServices.pdb
+C:\Users\nkurdadze\Source\Repos\RSDll\obj\Debug\RevenueServices.csprojResolveAssemblyReference.cache

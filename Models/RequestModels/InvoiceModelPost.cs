@@ -12,7 +12,6 @@ namespace RevenueServices.Models.RequestModels
 
         [JsonProperty("INVOICE")]
         public Invoice Invoice { get; set; }
-         
 
     }
 }

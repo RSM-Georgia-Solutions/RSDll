@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using RevenueServices;
+using RevenueServices.Inrerfaces;
 using SAPbouiCOM.Framework;
 
 namespace RsDllTest

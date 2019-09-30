@@ -6,21 +6,19 @@ using RevenueServices.Models.RequestModels;
 using RevenueServices.Models.ResponseModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RevenueServices
 {
-    public class RsClient : IRsClient
+    public sealed class RsClient : IRsClient
     {
-        public static HttpClient Client { get; set; }
+        private static HttpClient Client { get; set; }
         private static UserModel _userModel;
         private static TokenOneStepResponse _token;
 
-        static RsClient()
+        public RsClient()
         {
             Client = new HttpClient();
             Client.DefaultRequestHeaders.Accept.Clear();
@@ -34,7 +32,7 @@ namespace RevenueServices
         /// Token-ის განახლება
         /// </summary>
         /// <param name="token"></param>
-        private static void RefreshToken(string token)
+        public void RefreshToken(string token)
         {
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
@@ -42,7 +40,7 @@ namespace RevenueServices
         /// Token-ის ვალიდურობის შემოწმება/განახლება თუ ავტორიზირებული მომხმარებელია
         /// </summary>
         /// <returns></returns>
-        private static async Task<bool> ValidateToken()
+        private async Task ValidateToken()
         {
             if (_userModel == null)
             {
@@ -57,7 +55,6 @@ namespace RevenueServices
                     throw new Exception(response.Status.Text);
                 }
             }
-            return true;
         }
 
 
@@ -66,7 +63,7 @@ namespace RevenueServices
         /// </summary>
         /// <param name="userModel"></param>
         /// <returns></returns>
-        public static async Task<RsResponse<TokenOneStepResponse>> Authenticate(UserModel userModel)
+        public async Task<RsResponse<TokenOneStepResponse>> Authenticate(UserModel userModel)
         {
             string url = "/Users/Authenticate";
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, userModel))
@@ -87,11 +84,9 @@ namespace RevenueServices
         /// სისტემიდან გამოსვლა
         /// </summary>
         /// <returns></returns>
-        public static async Task<RsResponse<UserModel>> LogOut()
+        public async Task<RsResponse<UserModel>> LogOut()
         {
-            string url = "/Users/SignOut";
-            Dictionary<string, string> param = new Dictionary<string, string>();
-
+            const string url = "/Users/SignOut";
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, string.Empty))
             {
                 RsResponse<UserModel> result = await response.Content.ReadAsAsync<RsResponse<UserModel>>();
@@ -103,9 +98,9 @@ namespace RevenueServices
         /// </summary>
         /// <param name="vatPayerModel"></param>
         /// <returns></returns>
-        public static async Task<RsResponse<VatPayerResponse>> GetVatPayer(VatPayerModel vatPayerModel)
+        public async Task<RsResponse<VatPayerResponse>> GetVatPayer(VatPayerModel vatPayerModel)
         {
-            string url = "/Org/GetVatPayerStatus";
+            const string url = "/Org/GetVatPayerStatus";
             await ValidateToken();
 
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, vatPayerModel))
@@ -114,17 +109,18 @@ namespace RevenueServices
                 return result;
             }
         }
+
         /// <summary>
         /// მეთოდი აბრუნებს დეკლარაციის ნომერს, გადაეცემა თარიღი
         /// </summary>
-        /// <param name="invoice"></param>
+        /// <param name="operationPeriod"></param>
         /// <returns></returns>
-        public static async Task<RsResponse<SeqNumResponse>> GetSeqNum(DateTime OperationPeriod)
+        public async Task<RsResponse<SeqNumResponse>> GetSeqNum(DateTime operationPeriod)
         {
-            string url = "/Invoice/GetSeqNum";
+            const string url = "/Invoice/GetSeqNum";
             await ValidateToken();
-            string date = OperationPeriod.ToString("yyyyMM");
-            var operationPeriodJson = new { date };
+            string date = operationPeriod.ToString("yyyyMM");
+            //var operationPeriodJson = new { date };
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, date))
             {
                 RsResponse<SeqNumResponse> result = await response.Content.ReadAsAsync<RsResponse<SeqNumResponse>>();
@@ -135,9 +131,9 @@ namespace RevenueServices
         /// საზომი ერთეულების სიის წამოღება
         /// </summary>
         /// <returns></returns>
-        public static async Task<RsResponse<List<UnitOfMeasuresResponse>>> GetUnitOfMeasures()
+        public async Task<RsResponse<List<UnitOfMeasuresResponse>>> GetUnitOfMeasures()
         {
-            string url = "/Common/GetUnits";
+            const string url = "/Common/GetUnits";
             await ValidateToken();
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, string.Empty))
             {
@@ -149,11 +145,11 @@ namespace RevenueServices
         /// პასუხი ტრანზაქციის ნომრის მიხედვით
         /// </summary>
         /// <returns></returns>
-        public static async Task<RsResponse<string>> GetTransactionResult(string TransactionId) //TODO
+        public async Task<RsResponse<string>> GetTransactionResult(string transactionId) //TODO
         {
-            string url = "/Common/GetTransactionResult";
+            const string url = "/Common/GetTransactionResult";
             await ValidateToken();
-            var barCodeJson = new { TransactionId };
+            var barCodeJson = new { TransactionId = transactionId };
 
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, barCodeJson))
             {
@@ -162,9 +158,9 @@ namespace RevenueServices
             }
         }
 
-        public static async Task<RsResponse<InvoiceGetResponse>> GetInvoice(InvoiceModelGet invoiceModelGet)//TODO
+        public async Task<RsResponse<InvoiceGetResponse>> GetInvoice(InvoiceModelGet invoiceModelGet)//TODO
         {
-            string url = "/Invoice/GetInvoice";
+            const string url = "/Invoice/GetInvoice";
             await ValidateToken();
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoiceModelGet))
             {
@@ -173,12 +169,12 @@ namespace RevenueServices
             }
         }
 
-        public static async Task<RsResponse<InvoiceSendResponse>> SaveInvoice(InvoiceModelPost invoice)
+        public async Task<RsResponse<InvoiceSendResponse>> SaveInvoice(InvoiceModelPost invoice)
         {
-            string url = "/Invoice/SaveInvoice";
+            const string url = "/Invoice/SaveInvoice";
             await ValidateToken();
 
-            var x = JsonConvert.SerializeObject(invoice);
+            var dummy = JsonConvert.SerializeObject(invoice);
 
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoice))
             {
@@ -188,9 +184,9 @@ namespace RevenueServices
         }
 
 
-        public static async Task<RsResponse<InvoiceSendResponse>> ActivateInvoice(InvoiceModelPost invoice)
+        public async Task<RsResponse<InvoiceSendResponse>> ActivateInvoice(InvoiceModelPost invoice)
         {
-            string url = "/Invoice/ActivateInvoice";
+            const string url = "/Invoice/ActivateInvoice";
             await ValidateToken();
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoice))
             {
@@ -199,16 +195,16 @@ namespace RevenueServices
             }
         }
 
-        public static async Task<RsResponse<InvoiceSendResponse>> ActivateInvoices(List<Invoice> invoices)
+        public async Task<RsResponse<InvoiceSendResponse>> ActivateInvoices(List<Invoice> invoices)
         {
-            string url = "/Invoice/ActivateInvoices";
+            const string url = "/Invoice/ActivateInvoices";
             await ValidateToken();
             InvoicesModelPost invoiceList = new InvoicesModelPost
             {
                 Invoices = invoices
             };
 
-            var x = JsonConvert.SerializeObject(invoiceList);
+            var dummy = JsonConvert.SerializeObject(invoiceList);
 
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoiceList))
             {
@@ -217,9 +213,9 @@ namespace RevenueServices
             }
         }
 
-        public static async Task<RsResponse<InvoiceSendResponse>> DeleteInvoice(InvoiceModelPost invoice)
+        public async Task<RsResponse<InvoiceSendResponse>> DeleteInvoice(InvoiceModelPost invoice)
         {
-            string url = "/Invoice/DeleteInvoice";
+            const string url = "/Invoice/DeleteInvoice";
             await ValidateToken();
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoice))
             {
@@ -229,7 +225,7 @@ namespace RevenueServices
         }
 
 
-        public static async Task<RsResponse<InvoiceSendResponse>> CancelInvoice(Invoice invoice)
+        public async Task<RsResponse<InvoiceSendResponse>> CancelInvoice(Invoice invoice)
         {
             string url = "/Invoice/CancelInvoice";
             await ValidateToken();
@@ -244,7 +240,7 @@ namespace RevenueServices
             }
         }
 
-        public static async Task<RsResponse<InvoiceSendResponse>> RefuseInvoice(InvoiceModelPost invoice)
+        public async Task<RsResponse<InvoiceSendResponse>> RefuseInvoice(InvoiceModelPost invoice)
         {
             string url = "/Invoice/RefuseInvoice";
             await ValidateToken();
@@ -255,9 +251,9 @@ namespace RevenueServices
             }
         }
 
-        public static async Task<RsResponse<InvoiceSendResponse>> RefuseInvoices(List<Invoice> invoices)
+        public async Task<RsResponse<InvoiceSendResponse>> RefuseInvoices(List<Invoice> invoices)
         {
-            string url = "/Invoice/RefuseInvoices";
+            const string url = "/Invoice/RefuseInvoices";
             await ValidateToken();
             InvoicesModelPost invoiceList = new InvoicesModelPost
             {
@@ -271,12 +267,12 @@ namespace RevenueServices
         }
 
 
-        public static async Task<RsResponse<InvoiceSendResponse>> ConfirmInvoice(InvoiceModelPost invoice)
+        public async Task<RsResponse<InvoiceSendResponse>> ConfirmInvoice(InvoiceModelPost invoice)
         {
-            string url = "/Invoice/ConfirmInvoice";
+            const string url = "/Invoice/ConfirmInvoice";
             await ValidateToken();
 
-            var myContent = JsonConvert.SerializeObject(invoice);
+            var dummy = JsonConvert.SerializeObject(invoice);
 
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoice))
             {
@@ -285,15 +281,15 @@ namespace RevenueServices
             }
         }
 
-        public static async Task<RsResponse<InvoiceSendResponse>> ConfirmInvoices(List<Invoice> invoices)
+        public async Task<RsResponse<InvoiceSendResponse>> ConfirmInvoices(List<Invoice> invoices)
         {
             InvoicesModelPost invoiceList = new InvoicesModelPost
             {
                 Invoices = invoices
             };
-            string url = "/Invoice/ConfirmInvoices";
+            const string url = "/Invoice/ConfirmInvoices";
             await ValidateToken();
-            var x = JsonConvert.SerializeObject(invoiceList);
+            var dummy = JsonConvert.SerializeObject(invoiceList);
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoiceList))
             {
                 RsResponse<InvoiceSendResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceSendResponse>>();
@@ -301,12 +297,12 @@ namespace RevenueServices
             }
         }
 
-        public static async Task<RsResponse<ExciseResponse>> GetExciseList(ExciseFileter fileter)
+        public async Task<RsResponse<ExciseResponse>> GetExciseList(ExciseFileter fileter)
         {
-            string url = "/Invoice/ListExcise";
+            const string url = "/Invoice/ListExcise";
             await ValidateToken();
 
-            var x = JsonConvert.SerializeObject(fileter);
+            var dummy = JsonConvert.SerializeObject(fileter);
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, fileter))
             {
                 RsResponse<ExciseResponse> result = await response.Content.ReadAsAsync<RsResponse<ExciseResponse>>();
@@ -314,12 +310,12 @@ namespace RevenueServices
             }
         }
 
-        public static async Task<RsResponse<BarCodesResponse>> GetBarCodes(BarCodesFilter fileter)
+        public async Task<RsResponse<BarCodesResponse>> GetBarCodes(BarCodesFilter fileter)
         {
-            string url = "/Invoice/ListBarCodes";
+            const string url = "/Invoice/ListBarCodes";
             await ValidateToken();
 
-            var x = JsonConvert.SerializeObject(fileter);
+            var dummy = JsonConvert.SerializeObject(fileter);
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, fileter))
             {
                 RsResponse<BarCodesResponse> result = await response.Content.ReadAsAsync<RsResponse<BarCodesResponse>>();
@@ -327,9 +323,9 @@ namespace RevenueServices
             }
         }
 
-        public static async Task<RsResponse<BarCodesResponse>> GetBarCode(string barCode)
+        public async Task<RsResponse<BarCodesResponse>> GetBarCode(string barCode)
         {
-            string url = "/Invoice/GetBarCode";
+            const string url = "/Invoice/GetBarCode";
             await ValidateToken();
             var barCodeJson = new { barCode };
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, barCodeJson))
@@ -339,9 +335,9 @@ namespace RevenueServices
             }
         }
 
-        public static async Task<RsResponse<BarCodesResponse>> ClearBarCodes()
+        public async Task<RsResponse<BarCodesResponse>> ClearBarCodes()
         {
-            string url = "/Invoice/ClearBarCodes";
+            const string url = "/Invoice/ClearBarCodes";
             await ValidateToken();
 
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, string.Empty))
@@ -351,15 +347,30 @@ namespace RevenueServices
             }
         }
 
-        public static async Task<RsResponse<OrgInfoResponse>> GetOrgInfoByTin(string tin)
+        public async Task<RsResponse<OrgInfoResponse>> GetOrgInfoByTin(string tin)
         {
             //Test
-            string url = "/Org/GetOrgInfoByTin";
+            const string url = "/Org/GetOrgInfoByTin";
             await ValidateToken();
-            var x = JsonConvert.SerializeObject(tin);
+            var dummy = JsonConvert.SerializeObject(tin);
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, tin))
             {
                 RsResponse<OrgInfoResponse> result = await response.Content.ReadAsAsync<RsResponse<OrgInfoResponse>>();
+                return result;
+            }
+        }
+
+
+        public async Task<RsResponse<InvoiceResponse>> GetInvoices(InvoiceFilter filter)
+        {
+            //Test
+            const string url = "/Invoice/ListInvoices";
+            await ValidateToken();
+            var dummy = JsonConvert.SerializeObject(filter);
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, filter))
+            {
+                var res = response.Content.ReadAsStringAsync();
+                RsResponse<InvoiceResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceResponse>>();
                 return result;
             }
         }
