@@ -1,0 +1,15 @@
+D:\SAP Addons\RS.ge\RsDllTest\bin\Debug\RsDllTest.exe
+D:\SAP Addons\RS.ge\RsDllTest\bin\Debug\RsDllTest.pdb
+D:\SAP Addons\RS.ge\RsDllTest\bin\Debug\SAPBusinessOneSDK.dll
+D:\SAP Addons\RS.ge\RsDllTest\obj\Debug\RsDllTest.csprojResolveAssemblyReference.cache
+D:\SAP Addons\RS.ge\RsDllTest\obj\Debug\RsDllTest.exe
+D:\SAP Addons\RS.ge\RsDllTest\obj\Debug\RsDllTest.pdb
+D:\SAP Addons\RS.ge\RsDllTest\bin\Debug\Newtonsoft.Json.dll
+D:\SAP Addons\RS.ge\RsDllTest\bin\Debug\Autofac.dll
+D:\SAP Addons\RS.ge\RsDllTest\bin\Debug\System.Net.Http.Formatting.dll
+D:\SAP Addons\RS.ge\RsDllTest\bin\Debug\RevenueServices.pdb
+D:\SAP Addons\RS.ge\RsDllTest\bin\Debug\Newtonsoft.Json.xml
+D:\SAP Addons\RS.ge\RsDllTest\bin\Debug\Autofac.pdb
+D:\SAP Addons\RS.ge\RsDllTest\bin\Debug\Autofac.xml
+D:\SAP Addons\RS.ge\RsDllTest\bin\Debug\System.Net.Http.Formatting.xml
+D:\SAP Addons\RS.ge\RsDllTest\bin\Debug\RevenueServices.dll
