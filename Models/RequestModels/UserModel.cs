@@ -1,12 +1,15 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace RevenueServices
 {
+    //[JsonObject(NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     public class UserModel
     {
         [JsonProperty("USERNAME")]

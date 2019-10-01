@@ -28,6 +28,7 @@ namespace RevenueServices.Models.RequestFileters
             ItemName = string.Empty;
             UnitName = string.Empty;
             VatType = string.Empty;
+            MaximumRows = 10;
         }
     }
 }

@@ -47,6 +47,7 @@
     <Reference Include="SAPBusinessOneSDK" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Form1.b1f">
       <FormCategory>UserForm</FormCategory>
     </None>
@@ -58,7 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\nkurdadze\Source\Repos\RSDll\RevenueServices.csproj">
+    <ProjectReference Include="..\RevenueServices.csproj">
       <Project>{efdf1bff-74bc-47e5-a189-263e447a80c1}</Project>
       <Name>RevenueServices</Name>
     </ProjectReference>

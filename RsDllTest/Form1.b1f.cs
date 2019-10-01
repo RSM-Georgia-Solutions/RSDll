@@ -84,14 +84,12 @@ namespace RsDllTest
             };
 
             Dictionary<IRsResponse, string> responses = new Dictionary<IRsResponse, string>();
-
-            RsResponse<TokenOneStepResponse> auth = _rsClient.Authenticate(userModel).Result;
-            var auth2 = _rsClient.GetUnitOfMeasures().Result;
-
+            var auth2 = _rsClient.GetInvoices(new InvoiceFilter()).Result;
+             
+            Console.WriteLine();
 
             //responses.Add(auth, "1");
 
-            //var x = RsClient.GetBarCodes(new BarCodesFilter()).Result;
             //var qew = new VatPayerModel { Tin = "12345678910", VatDate = DateTime.Now };
 
             //RsResponse<InvoiceSendResponse> activateInvoice = _rsClient.ActivateInvoice(invpost).Result;

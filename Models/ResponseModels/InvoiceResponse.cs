@@ -12,6 +12,10 @@ namespace RevenueServices.Models.ResponseModels
         [JsonProperty("ID")]
         public int Id { get; set; }
 
+        [JsonProperty("SUBUSER_ID_SELLER")]
+        public int SubSellerId { get; set; }
+        [JsonProperty("UNID_SELLER")]
+        public int UnIdSeller { get; set; }
         [JsonProperty("INV_SERIE")]
         public string InvSerie { get; set; }
 
@@ -103,10 +107,7 @@ namespace RevenueServices.Models.ResponseModels
 
         [JsonProperty("SELLER_ACTION_TXT")]
         public string SellerActionTxt { get; set; }
-        [JsonProperty("BUYER _ACTION_TXT")]
-        public string BuyerActionTxt { get; set; }
-        [JsonProperty("SELLER")]
-        public string Seller { get; set; }
+       
         [JsonProperty("BUYER")]
         public string Buyer { get; set; }
 
