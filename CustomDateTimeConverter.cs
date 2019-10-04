@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace RevenueServices
 {
-    //class CustomDateTimeConverter : IsoDateTimeConverter
-    //{
-    //    public CustomDateTimeConverter()
-    //    {
-    //        base.DateTimeFormat = System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat.FullDateTimePattern;
-    //    }
-    //}
+    class CustomDateTimeConverter : IsoDateTimeConverter
+    {
+        public CustomDateTimeConverter()
+        {
+            base.DateTimeFormat = "“DD-MM-YYYY:DD-MM-YYYY";
+        }
+    }
     public class DateFormatConverter : IsoDateTimeConverter
     {
         public DateFormatConverter()

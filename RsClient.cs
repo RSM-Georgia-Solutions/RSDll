@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace RevenueServices
 {
@@ -411,8 +412,8 @@ namespace RevenueServices
                     attrbuteNamesAndProps.Add(propertyAttributeName, propertyName);
                 }
 
-                var headers = result2.Data.Invoies.Fields;
-                var rows = result2.Data.Invoies.Rows;
+                List<string> headers = result2.Data.Invoies.Fields;
+                List<List<object>> rows = result2.Data.Invoies.Rows;
                 Dictionary<string, int> headersIndexes = new Dictionary<string, int>();
                 int i = 0;
                 foreach (string header in headers)
@@ -431,133 +432,136 @@ namespace RevenueServices
 
                 foreach (List<object> row in rows)
                 {
+                    #region InvoiceResponceModelCreation
                     InvoiceResponse resp = new InvoiceResponse
                     {
                         CreateDate = Convert.ToDateTime(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.CreateDate)]]
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.CreateDate)]]
+                                           .ToString()),
                         ActivateDate = Convert.ToDateTime(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ActivateDate)]]
-                                ?.ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ActivateDate)]]
+                                           ?.ToString()),
                         AgreeCancelDate = Convert.ToDateTime(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.AgreeCancelDate)]]
-                                ?.ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.AgreeCancelDate)]]
+                                           ?.ToString()),
                         Buyer = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.Buyer)]]?.ToString(),
                         BuyerAction = Convert.ToInt32(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.BuyerAction)]]
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.BuyerAction)]]
+                                           .ToString()),
                         ChangeDate = Convert.ToDateTime(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ChangeDate)]]
-                                ?.ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ChangeDate)]]
+                                           ?.ToString()),
                         ConfirmDate = Convert.ToDateTime(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ConfirmDate)]]
-                                ?.ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ConfirmDate)]]
+                                           ?.ToString()),
                         CorrectDate = Convert.ToDateTime(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.CorrectDate)]]
-                                ?.ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.CorrectDate)]]
+                                           ?.ToString()),
                         CorrectReasonId = Convert.ToInt32(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.CorrectReasonId)]]
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.CorrectReasonId)]]
+                                           .ToString()),
                         DeleteDate = Convert.ToDateTime(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.DeleteDate)]]
-                                ?.ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.DeleteDate)]]
+                                           ?.ToString()),
                         OperationDate = Convert.ToDateTime(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.OperationDate)]]
-                                ?.ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.OperationDate)]]
+                                           ?.ToString()),
                         DeliveryDate = Convert.ToDateTime(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.DeliveryDate)]]
-                                ?.ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.DeliveryDate)]]
+                                           ?.ToString()),
                         RequestCancelDate = Convert.ToDateTime(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.RequestCancelDate)]]
-                                ?.ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.RequestCancelDate)]]
+                                           ?.ToString()),
                         RefuseDate = Convert.ToDateTime(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.RefuseDate)]]
-                                ?.ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.RefuseDate)]]
+                                           ?.ToString()),
                         TransStartDate = Convert.ToDateTime(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransStartDate)]]
-                                ?.ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransStartDate)]]
+                                           ?.ToString()),
                         DocMosNomBuyer = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.DocMosNomBuyer)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         DocMosNomSeller = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.DocMosNomSeller)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         InvCategoryName = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvCategoryName)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         InvComment = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvComment)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         InvSerie = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvSerie)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         InvTypeName = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvTypeName)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         SellerActionTxt = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SellerActionTxt)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         TemplateName = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TemplateName)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         TransCarModel = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCarModel)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         TransCarNo = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCarNo)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         TransTrailerNo = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransTrailerNo)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         TransCompany = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCompany)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         TransCostPayer = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCostPayer)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         TransDriver = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransDriver)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         TransEndAdress = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransEndAdress)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         TransEndAdressNo = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransEndAdressNo)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         TransName = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransName)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         TransStartAdress = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransStartAdress)]]
-                            ?.ToString(),
+                                       ?.ToString(),
                         TransStartAdressNo =
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransStartAdressNo)]]
-                                ?.ToString(),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransStartAdressNo)]]
+                                           ?.ToString(),
                         Id = Convert.ToInt32(row[headersIndexes[GetMemberName((InvoiceResponse c) => c.Id)]]
-                            .ToString()),
+                                       .ToString()),
                         InvNumber = Convert.ToInt32(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvNumber)]]?
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvNumber)]]?
+                                           .ToString()),
                         NextCorrectionId = Convert.ToInt32(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.NextCorrectionId)]]?
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.NextCorrectionId)]]?
+                                           .ToString()),
                         ParentInvNumber = Convert.ToInt32(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ParentInvNumber)]]?
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ParentInvNumber)]]?
+                                           .ToString()),
                         PrevCorrectionId = Convert.ToInt32(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.PrevCorrectionId)]]?
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.PrevCorrectionId)]]?
+                                           .ToString()),
                         SellerAction = Convert.ToInt32(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SellerAction)]]?
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SellerAction)]]?
+                                           .ToString()),
                         SeqnumBuyer = Convert.ToInt32(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SeqnumBuyer)]]?
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SeqnumBuyer)]]?
+                                           .ToString()),
                         SeqnumSeller = Convert.ToInt32(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SeqnumSeller)]]?
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SeqnumSeller)]]?
+                                           .ToString()),
                         SubSellerId = Convert.ToInt32(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SubSellerId)]]?
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SubSellerId)]]?
+                                           .ToString()),
                         UnIdSeller = Convert.ToInt32(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.UnIdSeller)]]?
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.UnIdSeller)]]?
+                                           .ToString()),
                         ExciseAmount = Convert.ToDouble(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ExciseAmount)]]?
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ExciseAmount)]]?
+                                           .ToString()),
                         FullAmount = Convert.ToDouble(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.FullAmount)]]?
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.FullAmount)]]?
+                                           .ToString()),
                         TransCost = Convert.ToDouble(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCost)]]?
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCost)]]?
+                                           .ToString()),
                         VatAmount = Convert.ToDouble(
-                            row[headersIndexes[GetMemberName((InvoiceResponse c) => c.VatAmount)]]?
-                                .ToString()),
+                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.VatAmount)]]?
+                                           .ToString()),
                     };
+                    #endregion
                     responses.Add(resp);
+
                     //var fieldName = GetMemberName((InvoiceResponse c) => c.CreateDate);
                     //var x = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.CreateDate)]].ToString();
                     //var x1= row[headersIndexes["CreateDate"]].ToString();

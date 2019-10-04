@@ -9,23 +9,40 @@ namespace RevenueServices.Models.ResponseModels
 {
     public class InvoiceResponse
     {
+
+        public InvoiceResponse()
+        {
+            DeleteDate = DateTime.MinValue;
+            CreateDate = DateTime.MinValue;
+            ActivateDate = DateTime.MinValue;
+            AgreeCancelDate = DateTime.MinValue;
+            ChangeDate = DateTime.MinValue;
+            DeleteDate = DateTime.MinValue;
+            TransStartDate = DateTime.MinValue;
+            RequestCancelDate = DateTime.MinValue;
+            RefuseDate = DateTime.MinValue;
+            OperationDate = DateTime.MinValue;
+            DeliveryDate = DateTime.MinValue;
+            CorrectDate = DateTime.MinValue;
+        }
+
         [JsonProperty("ID")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [JsonProperty("SUBUSER_ID_SELLER")]
-        public int SubSellerId { get; set; }
+        public int? SubSellerId { get; set; }
         [JsonProperty("UNID_SELLER")]
-        public int UnIdSeller { get; set; }
+        public int? UnIdSeller { get; set; }
         [JsonProperty("INV_SERIE")]
         public string InvSerie { get; set; }
 
         [JsonProperty("INV_NUMBER")]
-        public int InvNumber { get; set; }
+        public int? InvNumber { get; set; }
 
         [JsonProperty("SEQNUM_SELLER")]
-        public int SeqnumSeller { get; set; }
+        public int? SeqnumSeller { get; set; }
         [JsonProperty("SEQNUM_BUYER")]
-        public int SeqnumBuyer { get; set; }
+        public int? SeqnumBuyer { get; set; }
 
         [JsonProperty("INV_CATEGORY_NAME")]
         public string InvCategoryName { get; set; }
@@ -33,11 +50,11 @@ namespace RevenueServices.Models.ResponseModels
         [JsonProperty("INV_TYPE_NAME")]
         public string InvTypeName { get; set; }
         [JsonProperty("AMOUNT_FULL")]
-        public double FullAmount { get; set; }
+        public double? FullAmount { get; set; }
         [JsonProperty("AMOUNT_EXCISE")]
-        public double ExciseAmount { get; set; }
+        public double? ExciseAmount { get; set; }
         [JsonProperty("AMOUNT_VAT")]
-        public double VatAmount { get; set; }
+        public double? VatAmount { get; set; }
 
         [JsonProperty("DOCMOSNOM_SELLER")]
         public string DocMosNomSeller { get; set; }
@@ -67,62 +84,73 @@ namespace RevenueServices.Models.ResponseModels
         [JsonProperty("TRANS_TRAILER_NO")]
         public string TransTrailerNo { get; set; }
         [JsonProperty("TRANS_COST")]
-        public double TransCost { get; set; }
+        public double? TransCost { get; set; }
 
         [JsonProperty("TRANS_COST_PAYER")]
         public string TransCostPayer { get; set; }
 
         [JsonProperty("INV_COMMENT")]
         public string InvComment { get; set; }
-
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [JsonProperty("DELETE_DATE")]
-        public DateTime DeleteDate { get; set; }
+        public DateTime? DeleteDate { get; set; }
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [JsonProperty("CREATE_DATE")]
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [JsonProperty("OPERATION_DATE")]
-        public DateTime OperationDate { get; set; }
+        public DateTime? OperationDate { get; set; }
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [JsonProperty("ACTIVATE_DATE")]
-        public DateTime ActivateDate { get; set; }
+        public DateTime? ActivateDate { get; set; }
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [JsonProperty("TRANS_START_DATE")]
-        public DateTime TransStartDate { get; set; }
+        public DateTime? TransStartDate { get; set; }
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [JsonProperty("CONFIRM_DATE")]
-        public DateTime ConfirmDate { get; set; }
+        public DateTime? ConfirmDate { get; set; }
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [JsonProperty("REFUSE_DATE")]
-        public DateTime RefuseDate { get; set; }
+        public DateTime? RefuseDate { get; set; }
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [JsonProperty("DELIVERY_DATE")]
-        public DateTime DeliveryDate { get; set; }
+        public DateTime? DeliveryDate { get; set; }
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [JsonProperty("REQUEST_CANCEL_DATE")]
-        public DateTime RequestCancelDate { get; set; }
+        public DateTime? RequestCancelDate { get; set; }
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [JsonProperty("AGREE_CANCEL_DATE")]
-        public DateTime AgreeCancelDate { get; set; }
+        public DateTime? AgreeCancelDate { get; set; }
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [JsonProperty("CORRECT_DATE")]
-        public DateTime CorrectDate { get; set; }
+        public DateTime? CorrectDate { get; set; }
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [JsonProperty("CHANGE_DATE")]
-        public DateTime ChangeDate { get; set; }
+        public DateTime? ChangeDate { get; set; }
 
         [JsonProperty("SELLER_ACTION")]
-        public int SellerAction { get; set; }
+        public int? SellerAction { get; set; }
         [JsonProperty("BUYER_ACTION")]
-        public int BuyerAction { get; set; }
+        public int? BuyerAction { get; set; }
 
         [JsonProperty("SELLER_ACTION_TXT")]
         public string SellerActionTxt { get; set; }
-       
         [JsonProperty("BUYER")]
         public string Buyer { get; set; }
 
         [JsonProperty("PARENT_INV_NUMBER")]
-        public int ParentInvNumber { get; set; }
+        public int? ParentInvNumber { get; set; }
 
         [JsonProperty("CORRECT_REASON_ID")]
-        public int CorrectReasonId { get; set; }
+        public int? CorrectReasonId { get; set; }
 
         [JsonProperty("TEMPLATE_NAME")]
         public string TemplateName { get; set; }
 
         [JsonProperty("PREV_CORRECTION_ID")]
-        public int PrevCorrectionId { get; set; }
+        public int? PrevCorrectionId { get; set; }
         [JsonProperty("NEXT_CORRECTION_ID")]
-        public int NextCorrectionId { get; set; }
+        public int? NextCorrectionId { get; set; }
     }
+
 }
