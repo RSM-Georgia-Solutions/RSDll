@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using SAPbobsCOM;
 
 namespace RevenueServices.Models.ResponseModels
 {
@@ -24,6 +25,41 @@ namespace RevenueServices.Models.ResponseModels
             OperationDate = DateTime.MinValue;
             DeliveryDate = DateTime.MinValue;
             CorrectDate = DateTime.MinValue;
+            attrbuteNamesAndProps = new Dictionary<string, string>();
+            var props = RsClient.GetPropInfo(typeof(InvoiceResponse));
+            foreach (var prop in props)
+            {
+                var propertyAttributeName = prop.Attribute.PropertyName;
+                var propertyName = prop.Property.Name;
+                attrbuteNamesAndProps.Add(propertyAttributeName, propertyName);
+            }
+        }
+
+        private readonly Dictionary<string, string> attrbuteNamesAndProps;
+
+        public void InsertOrUpdateSap(Company company)
+        {
+            Recordset recSet = (Recordset)company.GetBusinessObject(BoObjectTypes.BoRecordset);
+            recSet.DoQuery($"Select Code From [@RSM_OINV] WHERE U_ID = {Id}");
+            UserTable userTable = company.UserTables.Item("RSM_OINV");
+            bool updateFlag = !recSet.EoF;
+            if (updateFlag)
+            {
+                userTable.GetByKey(recSet.Fields.Item("Code").Value.ToString());
+            }
+            foreach (Field field in userTable.UserFields.Fields)
+            {
+                string fieldDesc = field.Description;
+                string fieldName = field.Name;
+                object value = RsClient.GetPropValue(this, attrbuteNamesAndProps[fieldDesc]);
+                userTable.UserFields.Fields.Item(fieldName).Value = value ?? string.Empty;
+            }
+
+            int ret = updateFlag ? userTable.Update() : userTable.Add();
+            if (ret != 0)
+            {
+                throw new Exception(company.GetLastErrorDescription());
+            }
         }
 
         [JsonProperty("ID")]

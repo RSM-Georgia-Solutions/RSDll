@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RsDllTest", "RsDllTest\RsDl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevServices", "..\RevServices\RevServices.csproj", "{4AAD6A4A-46CE-4379-819F-D96660F2E585}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "..\DataLayer\DataLayer.csproj", "{D2DFE842-A85E-4D38-BB7F-797C957FB461}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{4AAD6A4A-46CE-4379-819F-D96660F2E585}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AAD6A4A-46CE-4379-819F-D96660F2E585}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AAD6A4A-46CE-4379-819F-D96660F2E585}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2DFE842-A85E-4D38-BB7F-797C957FB461}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2DFE842-A85E-4D38-BB7F-797C957FB461}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2DFE842-A85E-4D38-BB7F-797C957FB461}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2DFE842-A85E-4D38-BB7F-797C957FB461}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -370,7 +370,7 @@ namespace RevenueServices
             }
         }
 
-        private dynamic GetPropInfo(Type classType)
+        public static dynamic GetPropInfo(Type classType)
         {
             var props = classType.GetProperties().Select(p => new
             {
@@ -388,7 +388,10 @@ namespace RevenueServices
         {
             return ((MemberExpression)memberAccess.Body).Member.Name;
         }
-
+        public static object GetPropValue(object src, string propName)
+        {
+            return src.GetType().GetProperty(propName).GetValue(src, null);
+        }
         public async Task<RsResponse<List<InvoiceResponse>>> GetInvoices(InvoiceFilter filter)
         {
             const string url = "/Invoice/ListInvoices";
@@ -398,7 +401,7 @@ namespace RevenueServices
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, filter))
             {
                 var res = response.Content.ReadAsStringAsync().Result;
-                var list = JsonConvert.DeserializeObject<List<InvoiceResponse>>(res, settings);
+              //  var list = JsonConvert.DeserializeObject<List<InvoiceResponse>>(res, settings);
 
 
                 RsResponse<InvoicesModelAp> result2 = await response.Content.ReadAsAsync<RsResponse<InvoicesModelAp>>();
