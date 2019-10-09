@@ -37,11 +37,43 @@ namespace RevenueServices.Models.ResponseModels
 
         private readonly Dictionary<string, string> attrbuteNamesAndProps;
 
+
+        public void InsertOrUpdateUdo(Company company)
+        {
+            Recordset recSet = (Recordset)company.GetBusinessObject(BoObjectTypes.BoRecordset);
+            recSet.DoQuery($"Select DocEntry From [@RSM_OINV] WHERE U_ID = {Id}");
+            CompanyService oCompanyService = company.GetCompanyService();
+            GeneralService oGeneralService = oCompanyService.GetGeneralService("TaxDocument");
+            bool updateFlag = !recSet.EoF;
+            if (updateFlag)
+            {
+                GeneralDataParams oGeneralParams = (GeneralDataParams)oGeneralService.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralDataParams);
+                oGeneralParams.SetProperty("DocEntry", recSet.Fields.Item("DocEntry").Value.ToString());
+                GeneralData oGeneralData = oGeneralService.GetByParams(oGeneralParams);
+                foreach (KeyValuePair<string, string> attrbuteNamesAndProp in attrbuteNamesAndProps)
+                {
+                    object value = RsClient.GetPropValue(this, attrbuteNamesAndProp.Value);
+                    oGeneralData.SetProperty($"U_{attrbuteNamesAndProp.Key}", value ?? string.Empty);
+                }
+                oGeneralService.Update(oGeneralData);
+            }
+            else
+            {
+                GeneralData oGeneralData = (GeneralData)oGeneralService.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralData);
+                foreach (KeyValuePair<string, string> attrbuteNamesAndProp in attrbuteNamesAndProps)
+                {
+                    object value = RsClient.GetPropValue(this, attrbuteNamesAndProp.Value);
+                    oGeneralData.SetProperty($"U_{attrbuteNamesAndProp.Key}", value??string.Empty);
+                }
+                oGeneralService.Add(oGeneralData);
+            }
+        }
+
         public void InsertOrUpdateSap(Company company)
         {
             Recordset recSet = (Recordset)company.GetBusinessObject(BoObjectTypes.BoRecordset);
-            recSet.DoQuery($"Select Code From [@RSM_OINV] WHERE U_ID = {Id}");
-            UserTable userTable = company.UserTables.Item("RSM_OINV");
+            recSet.DoQuery($"Select Code From [@RSM_RS_OINV_HEADERS] WHERE U_ID = {Id}");
+            UserTable userTable = company.UserTables.Item("RSM_RS_OINV_HEADERS");
             bool updateFlag = !recSet.EoF;
             if (updateFlag)
             {
@@ -127,40 +159,40 @@ namespace RevenueServices.Models.ResponseModels
 
         [JsonProperty("INV_COMMENT")]
         public string InvComment { get; set; }
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         [JsonProperty("DELETE_DATE")]
         public DateTime? DeleteDate { get; set; }
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         [JsonProperty("CREATE_DATE")]
         public DateTime? CreateDate { get; set; }
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         [JsonProperty("OPERATION_DATE")]
         public DateTime? OperationDate { get; set; }
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         [JsonProperty("ACTIVATE_DATE")]
         public DateTime? ActivateDate { get; set; }
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         [JsonProperty("TRANS_START_DATE")]
         public DateTime? TransStartDate { get; set; }
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         [JsonProperty("CONFIRM_DATE")]
         public DateTime? ConfirmDate { get; set; }
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         [JsonProperty("REFUSE_DATE")]
         public DateTime? RefuseDate { get; set; }
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         [JsonProperty("DELIVERY_DATE")]
         public DateTime? DeliveryDate { get; set; }
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         [JsonProperty("REQUEST_CANCEL_DATE")]
         public DateTime? RequestCancelDate { get; set; }
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         [JsonProperty("AGREE_CANCEL_DATE")]
         public DateTime? AgreeCancelDate { get; set; }
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         [JsonProperty("CORRECT_DATE")]
         public DateTime? CorrectDate { get; set; }
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         [JsonProperty("CHANGE_DATE")]
         public DateTime? ChangeDate { get; set; }
 

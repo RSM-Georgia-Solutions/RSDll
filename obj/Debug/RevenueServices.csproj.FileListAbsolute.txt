@@ -27,5 +27,5 @@ C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\Newtonsoft.Json.xml
 C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\System.Net.Http.Formatting.xml
 C:\Users\nkurdadze\Source\Repos\RSDll\obj\Debug\RevenueServices.dll
 C:\Users\nkurdadze\Source\Repos\RSDll\obj\Debug\RevenueServices.pdb
-C:\Users\nkurdadze\Source\Repos\RSDll\obj\Debug\RevenueServices.csprojResolveAssemblyReference.cache
 C:\Users\nkurdadze\Source\Repos\RSDll\bin\Debug\SAPBusinessOneSDK.dll
+C:\Users\nkurdadze\Source\Repos\RSDll\obj\Debug\RevenueServices.csprojResolveAssemblyReference.cache

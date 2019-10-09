@@ -88,6 +88,7 @@ namespace RevenueServices
                 return result;
             }
         }
+
         /// <summary>
         /// სისტემიდან გამოსვლა
         /// </summary>
@@ -172,6 +173,7 @@ namespace RevenueServices
             await ValidateToken();
             using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, invoiceModelGet))
             {
+                var res = response.Content.ReadAsStringAsync().Result;
                 RsResponse<InvoiceGetResponse> result = await response.Content.ReadAsAsync<RsResponse<InvoiceGetResponse>>();
                 return result;
             }
@@ -392,20 +394,145 @@ namespace RevenueServices
         {
             return src.GetType().GetProperty(propName).GetValue(src, null);
         }
-        public async Task<RsResponse<List<InvoiceResponse>>> GetInvoices(InvoiceFilter filter)
-        {
-            const string url = "/Invoice/ListInvoices";
-            await ValidateToken();
-            var dummy = JsonConvert.SerializeObject(filter);
-            var settings = new JsonSerializerSettings { Converters = new[] { new ColumnarDataToListConverter<InvoiceResponse>() } };
-            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, filter))
-            {
-                var res = response.Content.ReadAsStringAsync().Result;
-              //  var list = JsonConvert.DeserializeObject<List<InvoiceResponse>>(res, settings);
+        /*  foreach (List<object> row in rows)
+         {
+                    #region InvoiceResponceModelCreation
+                    InvoiceResponse resp = new InvoiceResponse();
+                    foreach (KeyValuePair<string, int> headersIndex in headersIndexes)
+                    {
+                        PropertyInfo property = typeof(InvoiceResponse).GetProperty(headersIndex.Key);
+                        property.SetValue(resp, row[headersIndex.Value]);
+                    }
+                    resp.CreateDate = Convert.ToDateTime(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.CreateDate)]]
+                            .ToString());
+                    resp.ActivateDate = Convert.ToDateTime(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ActivateDate)]]
+                            ?.ToString());
+                    resp.AgreeCancelDate = Convert.ToDateTime(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.AgreeCancelDate)]]
+                            ?.ToString());
+                    resp.Buyer = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.Buyer)]]?.ToString();
+                    resp.BuyerAction = Convert.ToInt32(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.BuyerAction)]]
+                            .ToString());
+                    resp.ChangeDate = Convert.ToDateTime(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ChangeDate)]]
+                            ?.ToString());
+                    resp.ConfirmDate = Convert.ToDateTime(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ConfirmDate)]]
+                            ?.ToString());
+                    resp.CorrectDate = Convert.ToDateTime(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.CorrectDate)]]
+                            ?.ToString());
+                    resp.CorrectReasonId = Convert.ToInt32(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.CorrectReasonId)]]
+                            .ToString());
+                    resp.DeleteDate = Convert.ToDateTime(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.DeleteDate)]]
+                            ?.ToString());
+                    resp.OperationDate = Convert.ToDateTime(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.OperationDate)]]
+                            ?.ToString());
+                    resp.DeliveryDate = Convert.ToDateTime(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.DeliveryDate)]]
+                            ?.ToString());
+                    resp.RequestCancelDate = Convert.ToDateTime(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.RequestCancelDate)]]
+                            ?.ToString());
+                    resp.RefuseDate = Convert.ToDateTime(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.RefuseDate)]]
+                            ?.ToString());
+                    resp.TransStartDate = Convert.ToDateTime(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransStartDate)]]
+                            ?.ToString());
+                    resp.DocMosNomBuyer = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.DocMosNomBuyer)]]
+                        ?.ToString();
+                    resp.DocMosNomSeller = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.DocMosNomSeller)]]
+                        ?.ToString();
+                    resp.InvCategoryName = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvCategoryName)]]
+                        ?.ToString();
+                    resp.InvComment = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvComment)]]
+                        ?.ToString();
+                    resp.InvSerie = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvSerie)]]
+                        ?.ToString();
+                    resp.InvTypeName = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvTypeName)]]
+                        ?.ToString();
+                    resp.SellerActionTxt = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SellerActionTxt)]]
+                        ?.ToString();
+                    resp.TemplateName = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TemplateName)]]
+                        ?.ToString();
+                    resp.TransCarModel = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCarModel)]]
+                        ?.ToString();
+                    resp.TransCarNo = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCarNo)]]
+                        ?.ToString();
+                    resp.TransTrailerNo = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransTrailerNo)]]
+                        ?.ToString();
+                    resp.TransCompany = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCompany)]]
+                        ?.ToString();
+                    resp.TransCostPayer = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCostPayer)]]
+                        ?.ToString();
+                    resp.TransDriver = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransDriver)]]
+                        ?.ToString();
+                    resp.TransEndAdress = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransEndAdress)]]
+                        ?.ToString();
+                    resp.TransEndAdressNo = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransEndAdressNo)]]
+                        ?.ToString();
+                    resp.TransName = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransName)]]
+                        ?.ToString();
+                    resp.TransStartAdress = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransStartAdress)]]
+                        ?.ToString();
+                    resp.TransStartAdressNo = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransStartAdressNo)]]
+                        ?.ToString();
+                    resp.Id = Convert.ToInt32(row[headersIndexes[GetMemberName((InvoiceResponse c) => c.Id)]]
+                        .ToString());
+                    resp.InvNumber = Convert.ToInt32(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvNumber)]]?
+                            .ToString());
+                    resp.NextCorrectionId = Convert.ToInt32(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.NextCorrectionId)]]?
+                            .ToString());
+                    resp.ParentInvNumber = Convert.ToInt32(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ParentInvNumber)]]?
+                            .ToString());
+                    resp.PrevCorrectionId = Convert.ToInt32(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.PrevCorrectionId)]]?
+                            .ToString());
+                    resp.SellerAction = Convert.ToInt32(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SellerAction)]]?
+                            .ToString());
+                    resp.SeqnumBuyer = Convert.ToInt32(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SeqnumBuyer)]]?
+                            .ToString());
+                    resp.SeqnumSeller = Convert.ToInt32(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SeqnumSeller)]]?
+                            .ToString());
+                    resp.SubSellerId = Convert.ToInt32(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SubSellerId)]]?
+                            .ToString());
+                    resp.UnIdSeller = Convert.ToInt32(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.UnIdSeller)]]?
+                            .ToString());
+                    resp.ExciseAmount = Convert.ToDouble(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ExciseAmount)]]?
+                            .ToString());
+                    resp.FullAmount = Convert.ToDouble(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.FullAmount)]]?
+                            .ToString());
+                    resp.TransCost = Convert.ToDouble(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCost)]]?
+                            .ToString());
+                    resp.VatAmount = Convert.ToDouble(
+                        row[headersIndexes[GetMemberName((InvoiceResponse c) => c.VatAmount)]]?
+                            .ToString());
 
+                    #endregion
+                    responses.Add(resp);
 
-                RsResponse<InvoicesModelAp> result2 = await response.Content.ReadAsAsync<RsResponse<InvoicesModelAp>>();
-                var props = GetPropInfo(typeof(InvoiceResponse));
+                    //var fieldName = GetMemberName((InvoiceResponse c) => c.CreateDate);
+                    //var x = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.CreateDate)]].ToString();
+                    //var x1= row[headersIndexes["CreateDate"]].ToString();
+                       var props = GetPropInfo(typeof(InvoiceResponse));
 
                 Dictionary<string, string> attrbuteNamesAndProps = new Dictionary<string, string>();
                 foreach (var prop in props)
@@ -431,151 +558,40 @@ namespace RevenueServices
                     }
                     i++;
                 }
-                List<InvoiceResponse> responses = new List<InvoiceResponse>();
+                }*/
 
-                foreach (List<object> row in rows)
+        public async Task<RsResponse<List<InvoiceResponse>>> GetInvoices(InvoiceFilter filter)
+        {
+            const string url = "/Invoice/ListInvoices";
+            await ValidateToken();
+            var dummy = JsonConvert.SerializeObject(filter);
+            var settings = new JsonSerializerSettings { Converters = new[] { new ColumnarDataToListConverter<InvoiceResponse>() } };
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, filter))
+            {
+                var res = response.Content.ReadAsStringAsync().Result;
+                var list = JsonConvert.DeserializeObject<List<InvoiceResponse>>(res, settings);
+                RsResponse<InvoicesModelAp> result2 = await response.Content.ReadAsAsync<RsResponse<InvoicesModelAp>>();
+                RsResponse<List<InvoiceResponse>> result = new RsResponse<List<InvoiceResponse>>
                 {
-                    #region InvoiceResponceModelCreation
-                    InvoiceResponse resp = new InvoiceResponse
-                    {
-                        CreateDate = Convert.ToDateTime(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.CreateDate)]]
-                                           .ToString()),
-                        ActivateDate = Convert.ToDateTime(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ActivateDate)]]
-                                           ?.ToString()),
-                        AgreeCancelDate = Convert.ToDateTime(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.AgreeCancelDate)]]
-                                           ?.ToString()),
-                        Buyer = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.Buyer)]]?.ToString(),
-                        BuyerAction = Convert.ToInt32(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.BuyerAction)]]
-                                           .ToString()),
-                        ChangeDate = Convert.ToDateTime(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ChangeDate)]]
-                                           ?.ToString()),
-                        ConfirmDate = Convert.ToDateTime(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ConfirmDate)]]
-                                           ?.ToString()),
-                        CorrectDate = Convert.ToDateTime(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.CorrectDate)]]
-                                           ?.ToString()),
-                        CorrectReasonId = Convert.ToInt32(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.CorrectReasonId)]]
-                                           .ToString()),
-                        DeleteDate = Convert.ToDateTime(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.DeleteDate)]]
-                                           ?.ToString()),
-                        OperationDate = Convert.ToDateTime(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.OperationDate)]]
-                                           ?.ToString()),
-                        DeliveryDate = Convert.ToDateTime(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.DeliveryDate)]]
-                                           ?.ToString()),
-                        RequestCancelDate = Convert.ToDateTime(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.RequestCancelDate)]]
-                                           ?.ToString()),
-                        RefuseDate = Convert.ToDateTime(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.RefuseDate)]]
-                                           ?.ToString()),
-                        TransStartDate = Convert.ToDateTime(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransStartDate)]]
-                                           ?.ToString()),
-                        DocMosNomBuyer = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.DocMosNomBuyer)]]
-                                       ?.ToString(),
-                        DocMosNomSeller = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.DocMosNomSeller)]]
-                                       ?.ToString(),
-                        InvCategoryName = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvCategoryName)]]
-                                       ?.ToString(),
-                        InvComment = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvComment)]]
-                                       ?.ToString(),
-                        InvSerie = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvSerie)]]
-                                       ?.ToString(),
-                        InvTypeName = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvTypeName)]]
-                                       ?.ToString(),
-                        SellerActionTxt = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SellerActionTxt)]]
-                                       ?.ToString(),
-                        TemplateName = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TemplateName)]]
-                                       ?.ToString(),
-                        TransCarModel = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCarModel)]]
-                                       ?.ToString(),
-                        TransCarNo = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCarNo)]]
-                                       ?.ToString(),
-                        TransTrailerNo = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransTrailerNo)]]
-                                       ?.ToString(),
-                        TransCompany = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCompany)]]
-                                       ?.ToString(),
-                        TransCostPayer = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCostPayer)]]
-                                       ?.ToString(),
-                        TransDriver = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransDriver)]]
-                                       ?.ToString(),
-                        TransEndAdress = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransEndAdress)]]
-                                       ?.ToString(),
-                        TransEndAdressNo = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransEndAdressNo)]]
-                                       ?.ToString(),
-                        TransName = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransName)]]
-                                       ?.ToString(),
-                        TransStartAdress = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransStartAdress)]]
-                                       ?.ToString(),
-                        TransStartAdressNo =
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransStartAdressNo)]]
-                                           ?.ToString(),
-                        Id = Convert.ToInt32(row[headersIndexes[GetMemberName((InvoiceResponse c) => c.Id)]]
-                                       .ToString()),
-                        InvNumber = Convert.ToInt32(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.InvNumber)]]?
-                                           .ToString()),
-                        NextCorrectionId = Convert.ToInt32(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.NextCorrectionId)]]?
-                                           .ToString()),
-                        ParentInvNumber = Convert.ToInt32(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ParentInvNumber)]]?
-                                           .ToString()),
-                        PrevCorrectionId = Convert.ToInt32(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.PrevCorrectionId)]]?
-                                           .ToString()),
-                        SellerAction = Convert.ToInt32(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SellerAction)]]?
-                                           .ToString()),
-                        SeqnumBuyer = Convert.ToInt32(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SeqnumBuyer)]]?
-                                           .ToString()),
-                        SeqnumSeller = Convert.ToInt32(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SeqnumSeller)]]?
-                                           .ToString()),
-                        SubSellerId = Convert.ToInt32(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.SubSellerId)]]?
-                                           .ToString()),
-                        UnIdSeller = Convert.ToInt32(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.UnIdSeller)]]?
-                                           .ToString()),
-                        ExciseAmount = Convert.ToDouble(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.ExciseAmount)]]?
-                                           .ToString()),
-                        FullAmount = Convert.ToDouble(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.FullAmount)]]?
-                                           .ToString()),
-                        TransCost = Convert.ToDouble(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.TransCost)]]?
-                                           .ToString()),
-                        VatAmount = Convert.ToDouble(
-                                       row[headersIndexes[GetMemberName((InvoiceResponse c) => c.VatAmount)]]?
-                                           .ToString()),
-                    };
-                    #endregion
-                    responses.Add(resp);
-
-                    //var fieldName = GetMemberName((InvoiceResponse c) => c.CreateDate);
-                    //var x = row[headersIndexes[GetMemberName((InvoiceResponse c) => c.CreateDate)]].ToString();
-                    //var x1= row[headersIndexes["CreateDate"]].ToString();
-                }
-                RsResponse<List<InvoiceResponse>> result = new RsResponse<List<InvoiceResponse>>();
-                result.Status = result2.Status;
-                result.Data = responses;
+                    Status = result2.Status, Data = list
+                };
                 return result;
             }
         }
 
+        public async Task<RsResponse<InvoicesModelGetGoods>> GetInvoieItems(InvoiceItemsFilter filter)
+        {
+            //Test
+            const string url = "/Invoice/ListGoods";
+            await ValidateToken();
+            var dummy = JsonConvert.SerializeObject(filter);
+            using (HttpResponseMessage response = await Client.PostAsJsonAsync(url, filter))
+            {
+                var res = response.Content.ReadAsStringAsync().Result;
+                RsResponse<InvoicesModelGetGoods> result = await response.Content.ReadAsAsync<RsResponse<InvoicesModelGetGoods>>();
+                return result;
+            }
+        }
 
 
     }

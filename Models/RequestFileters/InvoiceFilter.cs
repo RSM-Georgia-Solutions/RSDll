@@ -13,12 +13,11 @@ namespace RevenueServices.Models.RequestFileters
         public string InvCategory { get; set; }
         [JsonProperty("INV_TYPE")]
         public string InvType { get; set; }
-        [JsonConverter(typeof(DateFormatConverter))]
+        //[JsonConverter(typeof(DateFormatConverter))]
         [JsonProperty("CREATE_DATE")]
-        public DateTime CreateDate { get; set; }
-        [JsonProperty("OPERATION_DATE")]
-        [JsonConverter(typeof(DateFormatConverter))]
-        public DateTime OperationDate { get; set; }
+        public string CreateDate { get; set; }
+        [JsonProperty("OPERATION_DATE")]   
+        public string OperationDate { get; set; }
         [JsonProperty("MAXIMUM_ROWS")]
         public int MaxRows { get; set; }
         [JsonProperty("TYPE")]
@@ -26,10 +25,8 @@ namespace RevenueServices.Models.RequestFileters
 
         public InvoiceFilter()
         {
-            InvCategory = "1";
-            InvType = "2,3";
-            CreateDate = DateTime.Now;
-            OperationDate = DateTime.Now;
+            InvCategory = "1,2,3,4";
+            InvType = "1,2,3,4,5,6,7,8,9,10,11";
             MaxRows = 50;
             Type = 1;
         }

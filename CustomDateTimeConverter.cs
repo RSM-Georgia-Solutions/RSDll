@@ -21,4 +21,11 @@ namespace RevenueServices
             base.DateTimeFormat = "dd-MM-yyyy";
         }
     }
+    public class DateFormatConverterWtf : IsoDateTimeConverter
+    {
+        public DateFormatConverterWtf()
+        {
+            base.DateTimeFormat = "dd-MM-yyyy HH:mm:ss";
+        }
+    }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SAPbobsCOM;
 
 namespace RevenueServices.Models
 {
@@ -35,13 +36,19 @@ namespace RevenueServices.Models
             PrevCorrectionId = 0;
             TempalteName = string.Empty;
             InvoiceGoods = new List<Good>();
-            invoiceAdvances = new List<InvoiceAdvance>();
+            InvoiceAdvances = new List<InvoiceAdvance>();
             InvoiceReturns = new List<InvoiceReturn>();
             InvoiceOilDocs = new List<object>();
             InvoiceParentGoods = new List<Good>();
-            invoiceSubDistributions = new List<InvoiceAdvance>();
-
-            
+            InvoiceSubDistributions = new List<InvoiceAdvance>();
+            _attrbuteNamesAndProps = new Dictionary<string, string>();
+            var props = RsClient.GetPropInfo(typeof(Invoice));
+            foreach (var prop in props)
+            {
+                var propertyAttributeName = prop.Attribute.PropertyName;
+                var propertyName = prop.Property.Name;
+                _attrbuteNamesAndProps.Add(propertyAttributeName, propertyName);
+            }
         }
 
         [JsonProperty("ID")]
@@ -61,34 +68,34 @@ namespace RevenueServices.Models
         [JsonProperty("BUYER_ACTION")]
         public int? BuyerAction { get; set; }//ქმედება მყიდველის მხრიდან: 0 - დასადასტურებელი, 1 -დადასტურებული, 2 - უარყოფილი
         [JsonProperty("OPERATION_DATE")]
-        [JsonConverter(typeof(DateFormatConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         public DateTime? OperationDate { get; set; }
         [JsonProperty("ACTIVATE_DATE")]
-        [JsonConverter(typeof(DateFormatConverter))]
-        public DateTime? ActivationDate { get; set; }
+        [JsonConverter(typeof(DateFormatConverterWtf))]
+        public DateTime? ActivateDate { get; set; }
         [JsonProperty("CREATE_DATE")]
-        [JsonConverter(typeof(DateFormatConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         public DateTime? CreateDate { get; set; }
         [JsonProperty("CONFIRM_DATE")]
-        [JsonConverter(typeof(DateFormatConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         public DateTime? ConfirmDate { get; set; }
         [JsonProperty("REFUSE_DATE")]
-        [JsonConverter(typeof(DateFormatConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         public DateTime? RefuseDate { get; set; }
         [JsonProperty("REQUEST_CANCEL_DATE")]
-        [JsonConverter(typeof(DateFormatConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         public DateTime? RequestCanelDate { get; set; }
         [JsonProperty("DELIVERY_DATE")]
-        [JsonConverter(typeof(DateFormatConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         public DateTime? DeliveryDate { get; set; }
         [JsonProperty("AGREE_CANCEL_DATE")]
-        [JsonConverter(typeof(DateFormatConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         public DateTime? AgreeCancelDate { get; set; }
         [JsonProperty("CORRECT_DATE")]
-        [JsonConverter(typeof(DateFormatConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         public DateTime? CorrectionDate { get; set; }
         [JsonProperty("TRANS_START_DATE")]
-        [JsonConverter(typeof(DateFormatConverter))]
+        [JsonConverter(typeof(DateFormatConverterWtf))]
         public DateTime? TransactionStartDate { get; set; }
         [JsonProperty("CORRECT_REASON_ID")]
         public int? CorrectionReasonId { get; set; }
@@ -120,7 +127,7 @@ namespace RevenueServices.Models
         public double? ExciseAmount { get; set; }
         [JsonProperty("AMOUNT_VAT")]
         public double? VatAmount { get; set; }
-        [JsonProperty("AMOUNT_MAX")]//ავანსის განაშთვის მაქსიმალური თანხის რაოდენობა
+        [JsonProperty("AMOUNT_MAX")]//ავანსის განაშთვის მაქსიმალური თანხის რაოდენობა//
         public double? MaxAmount { get; set; }
         [JsonProperty("TRANS_START_ADDRESS")]
         public string StartAdressTrans { get; set; }
@@ -166,7 +173,7 @@ namespace RevenueServices.Models
 
         [JsonProperty("NEXT_CORRECTION_ID")]
         public int? NextCorrectionId { get; set; }
-        [JsonProperty("INV_SOURCE")]//საგადასახადო დოკუმენტის ვერსია: 0 - WEB, 1 - SERVICE, 2 - MOBILE
+        [JsonProperty("INV_SOURCE")]//საგადასახადო დოკუმენტის ვერსია: 0 - WEB, 1 - SERVICE, 2 - MOBILE/
         public int? InvSource { get; set; }
         [JsonProperty("TEMPLATE_NAME")]
         public string TempalteName { get; set; }
@@ -182,14 +189,60 @@ namespace RevenueServices.Models
         public List<InvoiceReturn> InvoiceReturns { get; set; }
 
         [JsonProperty("INVOICE_ADVANCE")]
-        public List<InvoiceAdvance> invoiceAdvances { get; set; }
+        public List<InvoiceAdvance> InvoiceAdvances { get; set; }
 
         [JsonProperty("SUB_INVOICES_DISTRIBUTION")]
-        public List<InvoiceAdvance> invoiceSubDistributions { get; set; }
+        public List<InvoiceAdvance> InvoiceSubDistributions { get; set; }
         [JsonProperty("INVOICE_OIL_DOCS")]
         public List<object> InvoiceOilDocs { get; set; }
+        private readonly Dictionary<string, string> _attrbuteNamesAndProps;
 
+        public int InsertOrUpdateUdo(Company company)
+        {
+            Recordset recSet = (Recordset)company.GetBusinessObject(BoObjectTypes.BoRecordset);
+            recSet.DoQuery($"Select DocEntry From [@RSM_RS_OINV] WHERE U_ID = {Id}");
+            CompanyService oCompanyService = company.GetCompanyService();
+            GeneralService oGeneralService = oCompanyService.GetGeneralService("TaxDocument");
+            int docEntry = 0;
+            bool updateFlag = !recSet.EoF;
+            if (updateFlag)
+            {
+                docEntry = int.Parse(recSet.Fields.Item("DocEntry").Value.ToString());
+                GeneralDataParams oGeneralParams = (GeneralDataParams)oGeneralService.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralDataParams);
+                oGeneralParams.SetProperty("DocEntry", docEntry);
+                GeneralData oGeneralData = oGeneralService.GetByParams(oGeneralParams);
+                foreach (KeyValuePair<string, string> attrbuteNamesAndProp in _attrbuteNamesAndProps)
+                {
+                    if (attrbuteNamesAndProp.Key == "INVOICE_OIL_DOCS" || attrbuteNamesAndProp.Key == "SUB_INVOICES_DISTRIBUTION" || attrbuteNamesAndProp.Key == "INVOICE_ADVANCE" || attrbuteNamesAndProp.Key == "INVOICE_RETURN" || attrbuteNamesAndProp.Key == "INVOICE_PARENT_GOODS" || attrbuteNamesAndProp.Key == "INVOICE_GOODS")
+                    {
+                        continue;
+                    }
+                    object valueTmp = RsClient.GetPropValue(this, attrbuteNamesAndProp.Value);
+                    var value = valueTmp is bool ? valueTmp.ToString() : valueTmp ?? string.Empty;
+                    oGeneralData.SetProperty($"U_{attrbuteNamesAndProp.Key}", value);
+                }
+                oGeneralService.Update(oGeneralData);
+                return docEntry;
+            }
+            else
+            {
+                GeneralData oGeneralData = (GeneralData)oGeneralService.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralData);
+                foreach (KeyValuePair<string, string> attrbuteNamesAndProp in _attrbuteNamesAndProps)
+                {
+                    if (attrbuteNamesAndProp.Key == "INVOICE_OIL_DOCS" || attrbuteNamesAndProp.Key == "SUB_INVOICES_DISTRIBUTION" || attrbuteNamesAndProp.Key == "INVOICE_ADVANCE" || attrbuteNamesAndProp.Key == "INVOICE_RETURN" || attrbuteNamesAndProp.Key == "INVOICE_PARENT_GOODS" || attrbuteNamesAndProp.Key == "INVOICE_GOODS")
+                    {
+                        continue;
+                    }
+                    object valueTmp = RsClient.GetPropValue(this, attrbuteNamesAndProp.Value);
+                    var value = valueTmp is bool ? valueTmp.ToString() : valueTmp ?? string.Empty;
+                    oGeneralData.SetProperty($"U_{attrbuteNamesAndProp.Key}", value);
+                }
+                var res = oGeneralService.Add(oGeneralData);
+                var result = res.GetProperty("DocEntry").ToString();
+                return int.Parse(result);
 
+            }
+        }
 
     }
 }

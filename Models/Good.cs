@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SAPbobsCOM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace RevenueServices.Models
         public double? QuantityExt { get; set; }
         [JsonProperty("QUANTITY_STOCK")]
         public double? QuantityStock { get; set; }
- 
+
         [JsonProperty("QUANTITY_MAX")]
         public double? QuantityMax { get; set; }
         [JsonProperty("QUANTITY_USED")]
@@ -56,12 +57,89 @@ namespace RevenueServices.Models
         [JsonProperty("EXCISE_AMOUNT")]
         public double? ExciseAmount { get; set; }
         [JsonProperty("EXCISE_AMOUNT_TXT")]
-        public double? ExciseAmountTxt { get; set; }
+        public string ExciseAmountTxt { get; set; }
         [JsonProperty("EXCISE_ID")]
         public int? ExciseId { get; set; }
         [JsonProperty("EXCISE_UNIT_PRICE")]
         public double? ExciseUnitPrice { get; set; }
 
 
+        public Good()
+        {
+            attrbuteNamesAndProps = new Dictionary<string, string>();
+            var props = RsClient.GetPropInfo(typeof(Good));
+            foreach (var prop in props)
+            {
+                var propertyAttributeName = prop.Attribute.PropertyName;
+                var propertyName = prop.Property.Name;
+                attrbuteNamesAndProps.Add(propertyAttributeName, propertyName);
+            }
+        }
+
+        private readonly Dictionary<string, string> attrbuteNamesAndProps;
+
+        public void InsertOrUpdateUdo(Company company, int docEntry)
+        {
+            Recordset recSet = (Recordset)company.GetBusinessObject(BoObjectTypes.BoRecordset);
+            recSet.DoQuery($"Select DocEntry, LineId From [@RSM_RS_INV1] WHERE U_ID = {Id}");
+            int linenum = int.Parse(recSet.Fields.Item("LineId").Value.ToString()) - 1;
+            CompanyService oCompanyService = company.GetCompanyService();
+            GeneralService oGeneralService = oCompanyService.GetGeneralService("TaxDocument");
+            GeneralData oChild;
+            GeneralDataCollection oChildren;
+            bool updateFlag = !recSet.EoF;
+            if (updateFlag)
+            {
+                GeneralDataParams oGeneralParams = (GeneralDataParams)oGeneralService.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralDataParams);
+                oGeneralParams.SetProperty("DocEntry", docEntry);
+                GeneralData oGeneralData = oGeneralService.GetByParams(oGeneralParams);
+                oChildren = oGeneralData.Child("RSM_RS_INV1");
+                oChild = oChildren.Item(linenum);
+                foreach (KeyValuePair<string, string> attrbuteNamesAndProp in attrbuteNamesAndProps)
+                {
+                    object value = RsClient.GetPropValue(this, attrbuteNamesAndProp.Value);
+                    oChild.SetProperty($"U_{attrbuteNamesAndProp.Key}", value ?? string.Empty);
+                }
+                oGeneralService.Update(oGeneralData);
+            }
+            else
+            {
+                GeneralDataParams oGeneralParams = (GeneralDataParams)oGeneralService.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralDataParams);
+                oGeneralParams.SetProperty("DocEntry", docEntry);
+                GeneralData oGeneralData = oGeneralService.GetByParams(oGeneralParams);
+                oChildren = oGeneralData.Child("RSM_RS_INV1");
+                oChild = oChildren.Add();
+                foreach (KeyValuePair<string, string> attrbuteNamesAndProp in attrbuteNamesAndProps)
+                {
+                    object value = RsClient.GetPropValue(this, attrbuteNamesAndProp.Value);
+                    oChild.SetProperty($"U_{attrbuteNamesAndProp.Key}", value ?? string.Empty);
+                }
+                oGeneralService.Update(oGeneralData);
+            }
+        }
+        public void InsertOrUpdateSap(Company company)
+        {
+            Recordset recSet = (Recordset)company.GetBusinessObject(BoObjectTypes.BoRecordset);
+            recSet.DoQuery($"Select Code From [@RSM_RS_INV1] WHERE U_ID = {Id}");
+            UserTable userTable = company.UserTables.Item("RSM_RS_INV1");
+            bool updateFlag = !recSet.EoF;
+            if (updateFlag)
+            {
+                userTable.GetByKey(recSet.Fields.Item("Code").Value.ToString());
+            }
+            foreach (Field field in userTable.UserFields.Fields)
+            {
+                string fieldDesc = field.Description;
+                string fieldName = field.Name;
+                object value = RsClient.GetPropValue(this, attrbuteNamesAndProps[fieldDesc]);
+                userTable.UserFields.Fields.Item(fieldName).Value = value ?? string.Empty;
+            }
+
+            int ret = updateFlag ? userTable.Update() : userTable.Add();
+            if (ret != 0)
+            {
+                throw new Exception(company.GetLastErrorDescription());
+            }
+        }
     }
 }

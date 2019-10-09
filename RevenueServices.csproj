@@ -69,6 +69,7 @@
     <Compile Include="Models\InvoiceReturn.cs" />
     <Compile Include="Models\RequestFileters\BarCodesFilter.cs" />
     <Compile Include="Models\RequestFileters\InvoiceFilter.cs" />
+    <Compile Include="Models\RequestFileters\InvoiceItemsFilter.cs" />
     <Compile Include="Models\RequestModels\InvoiceModelGet.cs" />
     <Compile Include="Models\RequestModels\InvoiceModelPost.cs" />
     <Compile Include="Models\RequestModels\InvoicesModelPost.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Models\ResponseModels\InvoiceResponse.cs" />
     <Compile Include="Models\ResponseModels\InvoiceSendResponse.cs" />
     <Compile Include="Inrerfaces\IRsResponse.cs" />
+    <Compile Include="Models\ResponseModels\InvoicesModelGetGoods.cs" />
     <Compile Include="Models\ResponseModels\OrgInfoResponse.cs" />
     <Compile Include="Models\ResponseModels\SeqNumResponse.cs" />
     <Compile Include="Models\ResponseModels\TokenOneStepResponse.cs" />

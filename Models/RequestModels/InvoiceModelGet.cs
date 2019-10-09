@@ -11,7 +11,9 @@ namespace RevenueServices.Models.RequestModels
     {
         [JsonProperty("InvoiceID")]
         public int Id { get; set; }
+        [JsonProperty("InvoiceNumber")]
+        public int InvoiceNumber { get; set; }
         [JsonProperty("parentInvoiceID")]
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
     }
 }
