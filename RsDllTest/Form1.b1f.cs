@@ -84,9 +84,8 @@ namespace RsDllTest
             };
 
             Dictionary<IRsResponse, string> responses = new Dictionary<IRsResponse, string>();
-            var auth2 = _rsClient.GetInvoices(new InvoiceFilter()).Result;
-             
-            Console.WriteLine();
+            //var auth2 = _rsClient.GetInvoices(new InvoiceFilter()).Result;
+            //Console.WriteLine();
 
             //responses.Add(auth, "1");
 

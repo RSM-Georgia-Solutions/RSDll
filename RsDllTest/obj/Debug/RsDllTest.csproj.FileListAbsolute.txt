@@ -23,6 +23,6 @@ C:\Users\nkurdadze\Source\Repos\RSDll\RsDllTest\bin\Debug\System.Net.Http.Format
 C:\Users\nkurdadze\Source\Repos\RSDll\RsDllTest\bin\Debug\RevenueServices.pdb
 C:\Users\nkurdadze\Source\Repos\RSDll\RsDllTest\bin\Debug\Newtonsoft.Json.xml
 C:\Users\nkurdadze\Source\Repos\RSDll\RsDllTest\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\nkurdadze\Source\Repos\RSDll\RsDllTest\obj\Debug\RsDllTest.csprojResolveAssemblyReference.cache
 C:\Users\nkurdadze\Source\Repos\RSDll\RsDllTest\obj\Debug\RsDllTest.exe
 C:\Users\nkurdadze\Source\Repos\RSDll\RsDllTest\obj\Debug\RsDllTest.pdb
-C:\Users\nkurdadze\Source\Repos\RSDll\RsDllTest\obj\Debug\RsDllTest.csprojResolveAssemblyReference.cache
