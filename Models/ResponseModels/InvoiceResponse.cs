@@ -81,8 +81,8 @@ namespace RevenueServices.Models.ResponseModels
             }
             foreach (Field field in userTable.UserFields.Fields)
             {
-                string fieldDesc = field.Description;
                 string fieldName = field.Name;
+                string fieldDesc = field.Name.Remove(0, 2);
                 object value = RsClient.GetPropValue(this, attrbuteNamesAndProps[fieldDesc]);
                 userTable.UserFields.Fields.Item(fieldName).Value = value ?? string.Empty;
             }
