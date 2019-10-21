@@ -56,8 +56,6 @@ namespace RevenueServices.Models
         public string VatTypeTxt { get; set; }
         [JsonProperty("EXCISE_AMOUNT")]
         public double? ExciseAmount { get; set; }
-        [JsonProperty("EXCISE_AMOUNT_TXT")]
-        public string ExciseAmountTxt { get; set; }
         [JsonProperty("EXCISE_ID")]
         public int? ExciseId { get; set; }
         [JsonProperty("EXCISE_UNIT_PRICE")]
